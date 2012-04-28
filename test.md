@@ -1,4 +1,3 @@
-## title goes here
+## Test using new markdown format and text wrangler
 print 'hey'
-# just a test 
 print 'you' #i want to add some comment here
