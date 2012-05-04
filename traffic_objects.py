@@ -43,6 +43,7 @@ class Lane(object):
     def populate(self, n):
         """Adds n cars to the lane in random positions.
         """
+        self.map_update()
         if n > self.map.count('_'):
             if self.map.count('_') == 1: ss = ''
             else: ss = 's'
