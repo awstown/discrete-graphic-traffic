@@ -42,7 +42,7 @@ class Lane(object):
             self.map[car.position] = 'n'
 
 length = 200
-vel = 3
+vel = 5
 lane = Lane(length)
 toyota = Car(0, vel)
 lane.add_car(toyota)
@@ -106,19 +106,22 @@ class App:
         self.hi_there = Button(frame, text="Play", command=self.moving)
         self.hi_there.pack(side=LEFT)
 
-	self.restart = Button(frame, text="Hello", command=self.reset)
+	self.restart = Button(frame, text="RESET", command=self.reset)
         self.restart.pack(side=LEFT)
 
-    def say_hi(self):
-        print "hi there, everyone!"
-
     def moving(self):
-	for x in range(duration):
+	for x in range(duration-1):
 		time.sleep(0.025)
 		move('mycar',vel,0)
 		canvas.update()
-		#canvas.itemcget(blue_car)
-		#x1, y1 = canvas.coords('mycar')
+		#canvas.itemcget('mycar')
+		x1, y1, x2,y2 = canvas.coords('mycar')
+		if x1 > length:
+			canvas.delete('mycar')
+			blue_car = canvas.create_rectangle(0, 100, 10, 110, fill="blue",tags='mycar')
+			move('mycar',x1-length-vel,0)
+		else:
+			print x1
     def reset(self):
 	canvas.delete('mycar')
 	blue_car = canvas.create_rectangle(0, 100, 10, 110, fill="blue",tags='mycar')
@@ -126,7 +129,8 @@ class App:
 def move(self,x,y):
 	canvas.move(self,x,y)
 blue_car = canvas.create_rectangle(0, 100, 10, 110, fill="blue",tags='mycar')
-	
+x1, y1, x2,y2 = canvas.coords('mycar')
+print x1
 
 app = App(root)
 root.mainloop()
