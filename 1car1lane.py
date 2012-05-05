@@ -41,8 +41,8 @@ class Lane(object):
                 car.position = car.position - self.length
             self.map[car.position] = 'n'
 
-length = 10
-vel = 1
+length = 60
+vel = 3
 lane = Lane(length)
 toyota = Car(0, vel)
 lane.add_car(toyota)
@@ -50,8 +50,8 @@ a=[]
 t=[]
 for i in range(19):
 	print lane
-   	lane.update_all()
 	a.append(toyota.position)
+   	lane.update_all()
 	t.append(i)
 	
 print a
@@ -79,6 +79,7 @@ title('traffic')
 ##visualization
 from Tkinter import *
 root = Tk()
+import time
 #import Tkinter
 #import tkMessageBox
 
@@ -87,19 +88,40 @@ Height= 250
 Width = 300
 canvas = Canvas(root, bg="grey", height=Height, width=Width)
 
-coord = 10, 50, 240, 210
+
 canvas.create_line(0,Height/2,Width,Height/2)
 canvas.pack()
 
-def callback():
-    print "click!"
+class App:
 
-b = Button(root, text="QUIT", fg="red", command=root.quit)
-c = Button(root, text="OK", command = callback)
-d = Button(root, text="OK", command = callback)
-b.pack(side=LEFT)
-c.pack(side=LEFT)
-d.pack(side=RIGHT)
+    def __init__(self, master):
 
+        frame = Frame(master)
+        frame.pack()
+
+        self.button = Button(frame, text="QUIT", fg="red", command=frame.quit)
+        self.button.pack(side=LEFT)
+
+        self.hi_there = Button(frame, text="Play", command=self.moving)
+        self.hi_there.pack(side=LEFT)
+
+	self.hi_there = Button(frame, text="Hello", command=self.say_hi)
+        self.hi_there.pack(side=LEFT)
+
+    def say_hi(self):
+        print "hi there, everyone!"
+
+    def moving(self):
+	for x in range(15):
+		time.sleep(0.025)
+		move(hey,x,0)
+		canvas.update()
+def move(self,x,y):
+	canvas.move(self,x,y)
+hey = canvas.create_rectangle(0, 100, 10, 110, fill="blue")
+
+	
+
+app = App(root)
 root.mainloop()
 
