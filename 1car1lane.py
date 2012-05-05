@@ -6,10 +6,12 @@
 #of underscores. Each line printed represents a single moment
 #in time.
 
-import Tkinter as tk
-root = tk.Tk()
-root.title("Traffic Simulation")
-canvas = tk.Canvas(root, width =1000,height=300, bg="#FFFFFF")
+#import Tkinter as tk
+#import time
+#root = tk.Tk()
+#root.title("Traffic Simulation")
+#canvas = tk.Canvas(root, width =1000,height=300)
+#canvas.pack
 
 class Car(object):
     def __init__(self, pos=0, vel=0):
@@ -69,8 +71,35 @@ ax = fig.add_subplot(111)
 delta =(1,2,3,4)
 vf = (5,6,7,8)
 plt.scatter(a,t,c='b',alpha=0.7,cmap=cm.Paired)
-plt.show()
+xlabel('position')
+ylabel('time')
+title('traffic')
+#plt.show()
 
+##visualization
+from Tkinter import *
+root = Tk()
+#import Tkinter
+#import tkMessageBox
 
+#root = Tkinter.Tk()
+Height= 250
+Width = 300
+canvas = Canvas(root, bg="grey", height=Height, width=Width)
 
-#root.mainloop()
+coord = 10, 50, 240, 210
+canvas.create_line(0,Height/2,Width,Height/2)
+canvas.pack()
+
+def callback():
+    print "click!"
+
+b = Button(root, text="QUIT", fg="red", command=root.quit)
+c = Button(root, text="OK", command = callback)
+d = Button(root, text="OK", command = callback)
+b.pack(side=LEFT)
+c.pack(side=LEFT)
+d.pack(side=RIGHT)
+
+root.mainloop()
+
