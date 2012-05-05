@@ -67,8 +67,8 @@ class Lane(object):
             self.map[car.position] = 'n'
     def g_update_car(self, car):
         """Finds and sets the appropriate g value for a specific car instance.
-        Be sure to use map_update before updating g values.
         """
+        self.map_update()
         if car.position != self.length - 1:
             n = car.position + 1
         else:
@@ -82,7 +82,6 @@ class Lane(object):
         car.g = count
     def g_update_all(self):
         """Finds and sets the appropriate g value for each car instance in the lane.
-        Be sure to use map_update before updating g values.
         """
         for car in self.carlist:
             self.g_update_car(car)
