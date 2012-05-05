@@ -41,14 +41,15 @@ class Lane(object):
                 car.position = car.position - self.length
             self.map[car.position] = 'n'
 
-length = 60
+length = 200
 vel = 3
 lane = Lane(length)
 toyota = Car(0, vel)
 lane.add_car(toyota)
+duration = 19
 a=[]
 t=[]
-for i in range(19):
+for i in range(duration):
 	print lane
 	a.append(toyota.position)
    	lane.update_all()
@@ -84,13 +85,13 @@ import time
 #import tkMessageBox
 
 #root = Tkinter.Tk()
-Height= 250
-Width = 300
-canvas = Canvas(root, bg="grey", height=Height, width=Width)
+Height= 150
+canvas = Canvas(root, bg="grey", height=Height, width=length)
 
 
-canvas.create_line(0,Height/2,Width,Height/2)
+canvas.create_line(0,Height/2,length,Height/2)
 canvas.pack()
+
 
 class App:
 
@@ -105,21 +106,26 @@ class App:
         self.hi_there = Button(frame, text="Play", command=self.moving)
         self.hi_there.pack(side=LEFT)
 
-	self.hi_there = Button(frame, text="Hello", command=self.say_hi)
-        self.hi_there.pack(side=LEFT)
+	self.restart = Button(frame, text="Hello", command=self.reset)
+        self.restart.pack(side=LEFT)
 
     def say_hi(self):
         print "hi there, everyone!"
 
     def moving(self):
-	for x in range(15):
+	for x in range(duration):
 		time.sleep(0.025)
-		move(hey,x,0)
+		move('mycar',vel,0)
 		canvas.update()
+		#canvas.itemcget(blue_car)
+		#x1, y1 = canvas.coords('mycar')
+    def reset(self):
+	canvas.delete('mycar')
+	blue_car = canvas.create_rectangle(0, 100, 10, 110, fill="blue",tags='mycar')
+
 def move(self,x,y):
 	canvas.move(self,x,y)
-hey = canvas.create_rectangle(0, 100, 10, 110, fill="blue")
-
+blue_car = canvas.create_rectangle(0, 100, 10, 110, fill="blue",tags='mycar')
 	
 
 app = App(root)
