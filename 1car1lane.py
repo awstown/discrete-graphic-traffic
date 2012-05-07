@@ -46,7 +46,7 @@ vel = 6
 lane = Lane(length)
 toyota = Car(0, vel)
 lane.add_car(toyota)
-duration = 50
+duration = 150
 a=[]
 t=[]
 for i in range(duration):
@@ -55,7 +55,7 @@ for i in range(duration):
 	t.append(i)
 	
 print a
-print t
+#print t
 
 ##plotting the time graph
 
@@ -74,7 +74,7 @@ plt.scatter(a,t,c='b',alpha=0.7,cmap=cm.Paired)
 xlabel('position')
 ylabel('time')
 title('traffic')
-plt.show()
+#plt.show()
 
 ##visualization
 from Tkinter import *
@@ -110,27 +110,50 @@ class App:
 
     def moving(self):
 	for x in range(duration-1):
-		time.sleep(0.025)
-		move('mycar',vel,0)
-		canvas.update()
-		#canvas.itemcget('mycar')
-		x1, y1, x2,y2 = canvas.coords('mycar')
-		if x1 > length:
+		time.sleep(0.05)
+		x1,y1,x2,y2 = canvas.coords('mycar')
+		if a[x+1] > a[x]:
+			if x1 > length:
+				canvas.delete('mycar')
+				blue_car = canvas.create_rectangle(0, 100, 10, 110, fill="blue",tags='mycar')
+				canvas.update()
+				x1,y1,x2,y2 = canvas.coords('mycar')
+				print x1
+			else:
+                		veloc = a[x+1] - a[x]
+				move('mycar',veloc,0)
+				canvas.update()
+				x1,y1,x2,y2 = canvas.coords('mycar')
+				print x1
+		else:
+			veloc = length - a[x] + a[x+1]
 			canvas.delete('mycar')
 			blue_car = canvas.create_rectangle(0, 100, 10, 110, fill="blue",tags='mycar')
-			move('mycar',x1-length-vel,0)
-		else:
+			move('mycar',a[x+1],0)
+			x1,y1,x2,y2 = canvas.coords('mycar')
 			print x1
+		#time.sleep(0.025)
+		#move('mycar',veloc,0)
+		#canvas.update()
+		#canvas.itemcget('mycar')
+		#x1, y1, x2,y2 = canvas.coords('mycar')
+		#if x1 > length:
+		#	canvas.delete('mycar')
+		#	blue_car = canvas.create_rectangle(0, 100, 10, 110, fill="blue",tags='mycar')
+		#	move('mycar',x1-length-vel,0)
+		#else:
+		#	print x1
     def reset(self):
 	canvas.delete('mycar')
 	blue_car = canvas.create_rectangle(0, 100, 10, 110, fill="blue",tags='mycar')
+	j=duration-1
 
 def move(self,x,y):
 	canvas.move(self,x,y)
 blue_car = canvas.create_rectangle(0, 100, 10, 110, fill="blue",tags='mycar')
 x1, y1, x2,y2 = canvas.coords('mycar')
 print x1
-print x2
+#print x2
 app = App(root)
 root.mainloop()
 
