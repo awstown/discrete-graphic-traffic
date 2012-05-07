@@ -41,19 +41,18 @@ class Lane(object):
                 car.position = car.position - self.length
             self.map[car.position] = 'n'
 
-length = 200
+length = 100
 vel = 6
 lane = Lane(length)
 toyota = Car(0, vel)
 lane.add_car(toyota)
-duration = 150
+duration = 20
 a=[]
 t=[]
 for i in range(duration):
 	a.append(toyota.position)
    	lane.update_all()
 	t.append(i)
-	
 print a
 #print t
 
@@ -85,10 +84,10 @@ import time
 
 #root = Tkinter.Tk()
 Height= 150
-canvas = Canvas(root, bg="grey", height=Height, width=length)
+canvas = Canvas(root, bg="grey", height=Height, width=10*length)
 
 
-canvas.create_line(0,Height/2,length,Height/2)
+canvas.create_line(0,Height/2,10*length,Height/2)
 canvas.pack()
 
 
@@ -105,22 +104,24 @@ class App:
         self.hi_there = Button(frame, text="Play", command=self.moving)
         self.hi_there.pack(side=LEFT)
 
-	self.restart = Button(frame, text="RESET", command=self.reset)
+	self.restart = Button(frame, text="add", command=self.timeadd)
         self.restart.pack(side=LEFT)
 
     def moving(self):
+	canvas.delete('mycar')
+	blue_car = canvas.create_rectangle(0, 100, 10, 110, fill="blue",tags='mycar')
 	for x in range(duration-1):
-		time.sleep(0.05)
+		time.sleep(0.25)
 		x1,y1,x2,y2 = canvas.coords('mycar')
 		if a[x+1] > a[x]:
-			if x1 > length:
+			if x1 > 10*length:
 				canvas.delete('mycar')
 				blue_car = canvas.create_rectangle(0, 100, 10, 110, fill="blue",tags='mycar')
 				canvas.update()
 				x1,y1,x2,y2 = canvas.coords('mycar')
 				print x1
 			else:
-                		veloc = a[x+1] - a[x]
+                		veloc = 10*(a[x+1] - a[x])
 				move('mycar',veloc,0)
 				canvas.update()
 				x1,y1,x2,y2 = canvas.coords('mycar')
@@ -129,7 +130,7 @@ class App:
 			veloc = length - a[x] + a[x+1]
 			canvas.delete('mycar')
 			blue_car = canvas.create_rectangle(0, 100, 10, 110, fill="blue",tags='mycar')
-			move('mycar',a[x+1],0)
+			move('mycar',10*a[x+1],0)
 			x1,y1,x2,y2 = canvas.coords('mycar')
 			print x1
 		#time.sleep(0.025)
@@ -146,13 +147,15 @@ class App:
     def reset(self):
 	canvas.delete('mycar')
 	blue_car = canvas.create_rectangle(0, 100, 10, 110, fill="blue",tags='mycar')
-	j=duration-1
+    def timeadd(self):
+	print 'this button does nothing'
+	
 
 def move(self,x,y):
 	canvas.move(self,x,y)
 blue_car = canvas.create_rectangle(0, 100, 10, 110, fill="blue",tags='mycar')
 x1, y1, x2,y2 = canvas.coords('mycar')
-print x1
+#print x1
 #print x2
 app = App(root)
 root.mainloop()
