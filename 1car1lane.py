@@ -42,15 +42,14 @@ class Lane(object):
             self.map[car.position] = 'n'
 
 length = 200
-vel = 5
+vel = 6
 lane = Lane(length)
 toyota = Car(0, vel)
 lane.add_car(toyota)
-duration = 19
+duration = 50
 a=[]
 t=[]
 for i in range(duration):
-	print lane
 	a.append(toyota.position)
    	lane.update_all()
 	t.append(i)
@@ -75,7 +74,7 @@ plt.scatter(a,t,c='b',alpha=0.7,cmap=cm.Paired)
 xlabel('position')
 ylabel('time')
 title('traffic')
-#plt.show()
+plt.show()
 
 ##visualization
 from Tkinter import *
@@ -131,7 +130,7 @@ def move(self,x,y):
 blue_car = canvas.create_rectangle(0, 100, 10, 110, fill="blue",tags='mycar')
 x1, y1, x2,y2 = canvas.coords('mycar')
 print x1
-
+print x2
 app = App(root)
 root.mainloop()
 
