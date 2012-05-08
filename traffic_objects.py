@@ -95,6 +95,12 @@ class Lane(object):
         for car in self.carlist:
             l.append(car.position)
         return l
+    def car_speeds(self):
+        """Returns a list containing the speed of each car in carlist."""
+        l = []
+        for car in self.carlist:
+            l.append(car.speed)
+        return l
     def move_car(self, car):
         """Changes the position of a given car based on its speed attribute, making sure to loop to the beginning of the lane appropriately."""
         car.position += car.speed
