@@ -1,5 +1,4 @@
-# Defines the Car object and the Lane object. This was built assuming the movement
-# of the cars would be handled by a 'rules' script.
+# Defines the Car object and the Lane object. This was built assuming the movement of the cars would be handled by a 'rules' script.
 
 import random
 
@@ -90,4 +89,14 @@ class Lane(object):
         """
         for car in self.carlist:
             print '\n', car, '\n' + '-'*27
-
+    def car_positions(self):
+        """Returns a list containing the position of each car in carlist."""
+        l = []
+        for car in self.carlist:
+            l.append(car.position)
+        return l
+    def move_car(self, car):
+        """Changes the position of a given car based on its speed attribute, making sure to loop to the beginning of the lane appropriately."""
+        car.position += car.speed
+        if car.position > self.length - 1:
+            car.position -= self.length
