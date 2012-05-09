@@ -9,6 +9,12 @@ These are tentantive.
 
 ## Project Plan
 
+### Parameters
+-velocity
+
+-position
+
+
 ### Step 1: A single car looping on a single lane road of length, L.
 *Assigned:* Andrew Parker (_However, we are all attempting this individually to get an idea of the project in our heads_)
 
