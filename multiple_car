@@ -138,7 +138,8 @@ class App:
 	
 	frame = Frame(root)
 	frame.pack()
-
+	
+	Label(frame, text="enter the number of cars:").pack(side=TOP)
 	self.txt_ent = Entry(frame)
 	self.txt_ent.pack()
 
@@ -155,12 +156,15 @@ class App:
 	h=int(self.txt_ent.get())
 	print h
 	self.lane.populate(h)
-	self.lane.map_update()
 	pos = self.lane.car_positions()
 	a2 = [x * 10 for x in pos] 
 	for i in range(h):
 		rant = random.randint(0,len(color)-1)
 		self.canvas.create_rectangle(a2[i],50,a2[i]+10,60,fill=color[rant])
+	for i in range(h):
+		space = self.lane.map.index('n')
+		self.lane.map.insert(space,'_')
+		self.lane.map.remove('n')
 
     def moving(self):
 	print 'this button does nothing'
