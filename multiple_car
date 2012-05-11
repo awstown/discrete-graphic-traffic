@@ -144,14 +144,11 @@ class App:
 	if not pos:
 		pass
 	else:
-		h=int(self.txt_ent.get())
-		for i in range(h):
+		while self.lane.car_positions():
 			a = self.lane.carlist[0]
 			self.lane.remove_car(a)
 			self.canvas.delete('mycar')
-		self.lane.map_update
-		print self.lane.map
-		print self.lane.car_positions()
+			self.lane.map_update	
 	h=int(self.txt_ent.get())
 	print h
 	self.lane.populate(h)
@@ -167,6 +164,7 @@ class App:
 	self.lane.map_update()
 	print self.lane.map
 	print self.lane.car_positions()
+	
 
     def moving(self):
 	print 'this button does nothing'
