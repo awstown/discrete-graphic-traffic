@@ -128,7 +128,7 @@ color = ['snow','gainsboro','linen','moccasin','cornsilk','ivory','cornsilk','se
 class App:
 
     def __init__(self, root):
-	self.length = 20
+	self.length = 10
 	self.lane= Lane(self.length)
 	self.canvas = Canvas(root, bg="grey", height=100, width=self.length*10)
 	self.canvas.pack()
@@ -162,13 +162,23 @@ class App:
 		a2 = [x * 10 for x in pos] 
 		for i in range(h):
 			rant = random.randint(0,len(color)-1)
-			self.canvas.create_rectangle(a2[i],50,a2[i]+10,60,fill=color[rant])
+			self.canvas.create_rectangle(a2[i],50,a2[i]+10,60,fill=color[rant],tags='mycar')
 		for i in range(h):
 			space = self.lane.map.index('n')
 			self.lane.map.insert(space,'_')
 			self.lane.map.remove('n')
+		self.lane.map_update()
+		print self.lane.map
+		print self.lane.car_positions()
 	else:
-		print 'its got stuff'
+		h=int(self.txt_ent.get())
+		for i in range(h):
+			a = self.lane.carlist[0]
+			self.lane.remove_car(a)
+			self.canvas.delete('mycar')
+		self.lane.map_update
+		print self.lane.map
+		print self.lane.car_positions()
 
     def moving(self):
 	print 'this button does nothing'
