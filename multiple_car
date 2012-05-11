@@ -1,6 +1,9 @@
 # Defines the Car object and the Lane object. This was built assuming the movement of the cars would be handled by a 'rules' script.
 
 import random
+from Tkinter import *
+root = Tk()
+import time
 
 class Car(object):
     """Defines a Car object with attributes position, speed, and g, where g is
@@ -107,23 +110,7 @@ class Lane(object):
         if car.position > self.length - 1:
             car.position -= self.lengthcd
 
-
-#n = 4
-#lane.populate(n)
-#lane.map_update()
-#print lane.map
-#pos = lane.car_positions()
-#a2 = [x * 10 for x in pos] 
-#print pos
-#print a2
-
-from Tkinter import *
-root = Tk()
-import time
-
-color = ['snow','gainsboro','linen','moccasin','cornsilk','ivory','cornsilk','seashell','honeydew','azure','green','red','blue','turquoise','cyan','aquamarine','chartreuse','yellow','khaki','gold','goldenrod','sienna','peru','burlywood','beige','tan','chocolate','firebrick','orange','coral','tomato','salmon','pink','maroon','magenta','violet','plum','orchid','purple']
-
-
+color = ['snow','gainsboro','linen','moccasin','cornsilk','ivory','cornsilk','seashell','honeydew','azure','green','red','blue','turquoise','cyan','aquamarine','chartreuse','yellow','khaki','gold','goldenrod','sienna','peru','burlywood','beige','tan','chocolate','firebrick','orange','coral','tomato','salmon','pink','maroon','magenta','violet','plum','orchid','purple','thistle','slateblue1','royalblue1','lavenderblush1','skyblue1','SpringGreen2','DarkOliveGreen4','IndianRed1']
 
 class App:
 
@@ -155,21 +142,7 @@ class App:
     def adding(self):
 	pos = self.lane.car_positions()
 	if not pos:
-		h=int(self.txt_ent.get())
-		print h
-		self.lane.populate(h)
-		pos = self.lane.car_positions()
-		a2 = [x * 10 for x in pos] 
-		for i in range(h):
-			rant = random.randint(0,len(color)-1)
-			self.canvas.create_rectangle(a2[i],50,a2[i]+10,60,fill=color[rant],tags='mycar')
-		for i in range(h):
-			space = self.lane.map.index('n')
-			self.lane.map.insert(space,'_')
-			self.lane.map.remove('n')
-		self.lane.map_update()
-		print self.lane.map
-		print self.lane.car_positions()
+		pass
 	else:
 		h=int(self.txt_ent.get())
 		for i in range(h):
@@ -179,6 +152,21 @@ class App:
 		self.lane.map_update
 		print self.lane.map
 		print self.lane.car_positions()
+	h=int(self.txt_ent.get())
+	print h
+	self.lane.populate(h)
+	pos = self.lane.car_positions()
+	a2 = [x * 10 for x in pos] 
+	for i in range(h):
+		rant = random.randint(0,len(color)-1)
+		self.canvas.create_rectangle(a2[i],50,a2[i]+10,60,fill=color[rant],tags='mycar')
+	for i in range(h):
+		space = self.lane.map.index('n')
+		self.lane.map.insert(space,'_')
+		self.lane.map.remove('n')
+	self.lane.map_update()
+	print self.lane.map
+	print self.lane.car_positions()
 
     def moving(self):
 	print 'this button does nothing'
