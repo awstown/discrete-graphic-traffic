@@ -1,4 +1,5 @@
 import traffic_objects as to
+import analysis as a
 
 def update_and_move(car, lane, vmax, p, cc):
     """To be used only within other rules definitions. Sets the car's speed appropriately, then moves it."""
@@ -16,6 +17,7 @@ def update_and_move(car, lane, vmax, p, cc):
 
 def stca(lane, vmax, n=10, p=0.50, cc=False):
     """Use the STCA model to simulate the specified lane for 'n' discrete steps with probability 'p' for a car slowing down and with a speed limit of 'vmax' (measured in discrete steps). Setting argument 'cc' to 'True' activates Cruise Control mode."""
+    analyze(lane)
     for i in range(n):
         lane.g_update_all()
         for car in lane.carlist:
