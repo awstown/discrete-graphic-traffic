@@ -113,9 +113,11 @@ class Lane(object):
 
 color = ['snow','gainsboro','linen','moccasin','cornsilk','ivory','cornsilk','seashell','honeydew','azure','green','red','blue','turquoise','cyan','aquamarine','chartreuse','yellow','khaki','gold','goldenrod','sienna','peru','burlywood','beige','tan','chocolate','firebrick','orange','coral','tomato','salmon','pink','maroon','magenta','violet','plum','orchid','purple','thistle','slateblue1','royalblue1','lavenderblush1','skyblue1','SpringGreen2','DarkOliveGreen4','IndianRed1']
 
+
 cars=['mycar0','mycar1','mycar2','mycar3','mycar4','mycar5','mycar6','mycar7','mycar8','mycar9','mycar10','mycar11','mycar12','mycar13','mycar14','mycar15','mycar16','mycar17','mycar18','mycar19','mycar20','mycar21','mycar22','mycar23','mycar24','mycar25','mycar26','mycar27','mycar28','mycar29','mycar30','mycar31','mycar32','mycar33','mycar34','mycar35','mycar36','mycar37','mycar38','mycar39','mycar40','mycar41','mycar42','mycar43','mycar44','mycar45','mycar46','mycar47','mycar48','mycar49','mycar50']
 
 col =[]
+numcar=[]
 
 class App:
 
@@ -149,8 +151,9 @@ class App:
 	if not pos:
 		pass
 	else:
+		numcar.pop(0)
 		while self.lane.car_positions():
-			col.pop(0)
+			col.pop(0) 
 			a = self.lane.carlist[0]
 			self.lane.remove_car(a)
 			for i in range(len(cars)):
@@ -158,6 +161,7 @@ class App:
 			self.lane.map_update	
 	h=int(self.txt_ent.get())
 	print h
+	numcar.append(h)
 	self.lane.populate(h)
 	pos = self.lane.car_positions()
 	a2 = [x * 10 for x in pos] 
@@ -176,14 +180,15 @@ class App:
 	
 
     def moving(self):
+	print numcar
 	velocity = 10
 	duration = 50
 	car_object = self.lane.carlist
 	print car_object
 	for i in range(duration):
 		time.sleep(0.1)
-		h=int(self.txt_ent.get())
-		for i in range(h):
+		#h=int(self.txt_ent.get())
+		for i in range(numcar[0]):
 			x1,y1,x2,y2 = self.canvas.coords(cars[i])
 			if x1+velocity > self.length*10:
 				self.canvas.delete(cars[i])
