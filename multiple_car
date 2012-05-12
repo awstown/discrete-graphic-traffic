@@ -147,6 +147,9 @@ class App:
         self.restart.pack(side=LEFT)
 
     def adding(self):
+	if not self.txt_ent.get():
+		print 'input a number into the blank field'
+		return
 	pos = self.lane.car_positions()
 	if not pos:
 		pass
@@ -177,9 +180,11 @@ class App:
 	self.lane.map_update()
 	print self.lane.map
 	print self.lane.car_positions()
-	
 
     def moving(self):
+	if not numcar:
+		print 'no cars added to lane'
+		return
 	print numcar
 	velocity = 10
 	duration = 50
@@ -191,6 +196,9 @@ class App:
 		for i in range(numcar[0]):
 			x1,y1,x2,y2 = self.canvas.coords(cars[i])
 			if x1+velocity > self.length*10:
+				self.canvas.delete(cars[i])
+				self.canvas.create_rectangle(0,50,10,60, fill=color[col[i]], tags=cars[i])
+			elif x1+velocity == self.length*10:
 				self.canvas.delete(cars[i])
 				self.canvas.create_rectangle(0,50,10,60, fill=color[col[i]], tags=cars[i])
 			else:
