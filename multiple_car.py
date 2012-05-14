@@ -220,15 +220,17 @@ class App:
 	duration = 5
 	print car_object
 	for i in range(duration):
-		time.sleep(0.1)
+		time.sleep(0.5)
 		#h=int(self.txt_ent.get())
 		for j in range(numcar[0]):
-			self.lane.move_car(car_object[j])
+			self.lane.move_car(car_object[j]) #this is the code for moving cars. will be replaced by rules
 			thelist[j].append(car_object[j].position)
-			if thelist[i+1] > thelist[i]:
-				print 'higher'
+			if thelist[j][i+1] > thelist[j][i]:
+				self.canvas.move(cars[j],10,0)
 			else:
-				print 'going'
+				self.canvas.delete(cars[j])
+				self.canvas.create_rectangle(thelist[j][i+1],50,thelist[j][i+1]+10,60, fill=color[col[j]], tags=cars[j])
+				
 			#a5.append(car_object[0].position)
 			#x1,y1,x2,y2 = self.canvas.coords(cars[i])
 			#if thelist[i][j]*10+thelist[i][j+1]*10-thelist[i][j]*10 > self.length*10:
@@ -242,11 +244,12 @@ class App:
 			#x1,y1,x2,y2 = self.canvas.coords(cars[i])
 		#a3.append(x1) 
 		self.canvas.update()
+	print car_object[0].position,'end position'
 	#print a5,#prints the actual map location of car
 	#print a3 #prints the location of rectangle which represents car
-	print alist, 'youou'
-	print blist
-	print clist
+	#print alist, 'youou'
+	#print blist
+	#print clist
 	#print thelist[0][3]
 
     def reset(self):
