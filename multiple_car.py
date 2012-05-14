@@ -10,7 +10,7 @@ class Car(object):
     """Defines a Car object with attributes position, speed, and g, where g is
 reserved to store the number of empty spaces ahead of the car.
     """
-    def __init__(self, position=0, speed=0):
+    def __init__(self, position=0, speed=1):
         self.position = position
         self.speed = speed
         self.g = 0
@@ -109,7 +109,7 @@ class Lane(object):
         """Changes the position of a given car based on its speed attribute, making sure to loop to the beginning of the lane appropriately."""
         car.position += car.speed
         if car.position > self.length - 1:
-            car.position -= self.lengthcd
+            car.position -= self.length
 
 color = ['snow','gainsboro','linen','moccasin','cornsilk','ivory','cornsilk','seashell','honeydew','azure','green','red','blue','turquoise','cyan','aquamarine','chartreuse','yellow','khaki','gold','goldenrod','sienna','peru','burlywood','beige','tan','chocolate','firebrick','orange','coral','tomato','salmon','pink','maroon','magenta','violet','plum','orchid','purple','thistle','slateblue1','royalblue1','lavenderblush1','skyblue1','SpringGreen2','DarkOliveGreen4','IndianRed1']
 
@@ -118,6 +118,8 @@ cars=['mycar0','mycar1','mycar2','mycar3','mycar4','mycar5','mycar6','mycar7','m
 
 col =[]
 numcar=[]
+a5=[]
+a3=[]
 
 class App:
 
@@ -177,9 +179,14 @@ class App:
 		space = self.lane.map.index('n')
 		self.lane.map.insert(space,'_')
 		self.lane.map.remove('n')
+		x1,y1,x2,y2 = self.canvas.coords(cars[i])
 	self.lane.map_update()
 	print self.lane.map
 	print self.lane.car_positions()
+    	car_object = self.lane.carlist
+    	print car_object[0].position #gets the position of a single car created
+	a5.append(car_object[0].position) #records the initial position
+	a3.append(x1)
 
     def moving(self):
 	if not numcar:
@@ -194,6 +201,8 @@ class App:
 		time.sleep(0.1)
 		#h=int(self.txt_ent.get())
 		for i in range(numcar[0]):
+			self.lane.move_car(car_object[0])
+			a5.append(car_object[0].position)
 			x1,y1,x2,y2 = self.canvas.coords(cars[i])
 			if x1+velocity > self.length*10:
 				self.canvas.delete(cars[i])
@@ -203,7 +212,11 @@ class App:
 				self.canvas.create_rectangle(0,50,10,60, fill=color[col[i]], tags=cars[i])
 			else:
 				self.canvas.move(cars[i],velocity,0)
+		x1,y1,x2,y2 = self.canvas.coords(cars[i])
+		a3.append(x1) 
 		self.canvas.update()
+	print a5,#prints the actual map location of car
+	print a3 #prints the location of rectangle which represents car
 
     def reset(self):
 	print 'this also does nothing'
