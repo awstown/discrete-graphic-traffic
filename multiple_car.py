@@ -167,11 +167,11 @@ class App:
 				self.canvas.delete(cars[i])
 			self.lane.map_update
 		for i in range(len(pos)):   #code for resetting the big list
-			print thelist[i], 'the list'
+			#print thelist[i], 'the list'
 			while thelist[i]:
 				thelist[i].pop(0)
-			print thelist[i], 'the list after'
-			print thelist, 'the whole list'
+			#print thelist[i], 'the list after'
+			#print thelist, 'the whole list'
 	h=int(self.txt_ent.get())
 	numcar.append(h)
 	self.lane.populate(h)
@@ -181,25 +181,25 @@ class App:
 		rant = random.randint(0,len(color)-1)
 		col.append(rant)
 		self.canvas.create_rectangle(a2[i],50,a2[i]+10,60,fill=color[rant],tags=cars[i])
-	print col
+	#print col, 'prints the index for the color list'
 	car_object = self.lane.carlist
 	for i in range(h):
-		space = self.lane.map.index('n')
-		self.lane.map.insert(space,'_')
-		self.lane.map.remove('n')
-		x1,y1,x2,y2 = self.canvas.coords(cars[i])
+		#space = self.lane.map.index('n')
+		#self.lane.map.insert(space,'_')
+		#self.lane.map.remove('n')
+		#x1,y1,x2,y2 = self.canvas.coords(cars[i])
 		thelist[i].append(car_object[i].position)
 		#print x1
 	self.lane.map_update()
-	print self.lane.map
-	print self.lane.car_positions()
-    	car_object = self.lane.carlist
+	#print self.lane.map
+	#print self.lane.car_positions()
+    	#car_object = self.lane.carlist
     	#print car_object[0].position #gets the position of a single car created
-	a5.append(car_object[0].position) #records the initial position
+	#a5.append(car_object[0].position) #records the initial position
 	#print a5
-	print alist
-	print blist
-	print clist
+	#print alist
+	#print blist
+	#print clist
 
     def moving(self):
 	if not numcar:
@@ -207,12 +207,12 @@ class App:
 		return
 	print numcar, 'numcar'
 	for k in range(numcar[0]):   #code for resetting the big list
-			print k, 'this is k'
-			print thelist[k], 'the list in moving'
+			#print k, 'this is k'
+			#print thelist[k], 'the list in moving'
 			while thelist[k]:
 				thelist[k].pop(0)
-			print thelist[k], 'the list after in moving '
-			print thelist, 'the whole list in moving'
+			#print thelist[k], 'the list after in moving '
+			#print thelist, 'the whole list in moving'
 	car_object = self.lane.carlist
 	for w in range(numcar[0]): # puts the initial position back in
 		thelist[w].append(car_object[w].position)
