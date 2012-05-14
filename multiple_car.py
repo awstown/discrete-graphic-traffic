@@ -182,15 +182,15 @@ class App:
 		col.append(rant)
 		self.canvas.create_rectangle(a2[i],50,a2[i]+10,60,fill=color[rant],tags=cars[i])
 	#print col, 'prints the index for the color list'
-	car_object = self.lane.carlist
-	for i in range(h):
+	#car_object = self.lane.carlist
+	#for i in range(h):
 		#space = self.lane.map.index('n')
 		#self.lane.map.insert(space,'_')
 		#self.lane.map.remove('n')
 		#x1,y1,x2,y2 = self.canvas.coords(cars[i])
-		thelist[i].append(car_object[i].position)
+		#thelist[i].append(car_object[i].position)
 		#print x1
-	self.lane.map_update()
+	#self.lane.map_update()
 	#print self.lane.map
 	#print self.lane.car_positions()
     	#car_object = self.lane.carlist
