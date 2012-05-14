@@ -120,6 +120,8 @@ col =[]
 numcar=[]
 a5=[]
 a3=[]
+alist, blist, clist, dlist, elist, flist, glist, hlist, ilist, jlist = ([] for i in range(10))
+thelist = [alist,blist,clist,dlist,elist,flist,glist,hlist,ilist,jlist]
 
 class App:
 
@@ -163,9 +165,14 @@ class App:
 			self.lane.remove_car(a)
 			for i in range(len(cars)):
 				self.canvas.delete(cars[i])
-			self.lane.map_update	
+			self.lane.map_update
+		for i in range(len(pos)):   #code for resetting the big list
+			print thelist[i], 'the list'
+			while thelist[i]:
+				thelist[i].pop(0)
+			print thelist[i], 'the list after'
+			print thelist, 'the whole list'
 	h=int(self.txt_ent.get())
-	print h
 	numcar.append(h)
 	self.lane.populate(h)
 	pos = self.lane.car_positions()
@@ -175,48 +182,72 @@ class App:
 		col.append(rant)
 		self.canvas.create_rectangle(a2[i],50,a2[i]+10,60,fill=color[rant],tags=cars[i])
 	print col
+	car_object = self.lane.carlist
 	for i in range(h):
 		space = self.lane.map.index('n')
 		self.lane.map.insert(space,'_')
 		self.lane.map.remove('n')
 		x1,y1,x2,y2 = self.canvas.coords(cars[i])
+		thelist[i].append(car_object[i].position)
+		#print x1
 	self.lane.map_update()
 	print self.lane.map
 	print self.lane.car_positions()
     	car_object = self.lane.carlist
-    	print car_object[0].position #gets the position of a single car created
+    	#print car_object[0].position #gets the position of a single car created
 	a5.append(car_object[0].position) #records the initial position
-	a3.append(x1)
+	#print a5
+	print alist
+	print blist
+	print clist
 
     def moving(self):
 	if not numcar:
 		print 'no cars added to lane'
 		return
-	print numcar
-	velocity = 10
-	duration = 50
+	print numcar, 'numcar'
+	for k in range(numcar[0]):   #code for resetting the big list
+			print k, 'this is k'
+			print thelist[k], 'the list in moving'
+			while thelist[k]:
+				thelist[k].pop(0)
+			print thelist[k], 'the list after in moving '
+			print thelist, 'the whole list in moving'
 	car_object = self.lane.carlist
+	for w in range(numcar[0]): # puts the initial position back in
+		thelist[w].append(car_object[w].position)
+	#velocity = 10
+	duration = 5
 	print car_object
 	for i in range(duration):
 		time.sleep(0.1)
 		#h=int(self.txt_ent.get())
-		for i in range(numcar[0]):
-			self.lane.move_car(car_object[0])
-			a5.append(car_object[0].position)
-			x1,y1,x2,y2 = self.canvas.coords(cars[i])
-			if x1+velocity > self.length*10:
-				self.canvas.delete(cars[i])
-				self.canvas.create_rectangle(0,50,10,60, fill=color[col[i]], tags=cars[i])
-			elif x1+velocity == self.length*10:
-				self.canvas.delete(cars[i])
-				self.canvas.create_rectangle(0,50,10,60, fill=color[col[i]], tags=cars[i])
+		for j in range(numcar[0]):
+			self.lane.move_car(car_object[j])
+			thelist[j].append(car_object[j].position)
+			if thelist[i+1] > thelist[i]:
+				print 'higher'
 			else:
-				self.canvas.move(cars[i],velocity,0)
-		x1,y1,x2,y2 = self.canvas.coords(cars[i])
-		a3.append(x1) 
+				print 'going'
+			#a5.append(car_object[0].position)
+			#x1,y1,x2,y2 = self.canvas.coords(cars[i])
+			#if thelist[i][j]*10+thelist[i][j+1]*10-thelist[i][j]*10 > self.length*10:
+			#	self.canvas.delete(cars[i])
+			#	self.canvas.create_rectangle(0,50,10,60, fill=color[col[i]], tags=cars[i])
+			#elif thelist[i][j]*10+thelist[i][j+1]*10-thelist[i][j]*10 == self.length*10:
+			#	self.canvas.delete(cars[i])
+			#	self.canvas.create_rectangle(0,50,10,60, fill=color[col[i]], tags=cars[i])
+			#else:
+			#	self.canvas.move(cars[i],thelist[i][j+1]-thelist[i][j],0)
+			#x1,y1,x2,y2 = self.canvas.coords(cars[i])
+		#a3.append(x1) 
 		self.canvas.update()
-	print a5,#prints the actual map location of car
-	print a3 #prints the location of rectangle which represents car
+	#print a5,#prints the actual map location of car
+	#print a3 #prints the location of rectangle which represents car
+	print alist, 'youou'
+	print blist
+	print clist
+	#print thelist[0][3]
 
     def reset(self):
 	print 'this also does nothing'
