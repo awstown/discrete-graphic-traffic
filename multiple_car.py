@@ -116,13 +116,23 @@ color = ['snow','gainsboro','linen','moccasin','cornsilk','ivory','cornsilk','se
 col =[]
 numcar=[]
 cars = []
+size = []
+
+lane = Lane(5)
+print lane.map
+lane = Lane(3)
+print lane.map
+
+
 
 class App:
 
     def __init__(self, root):
 	self.length = 10
 	self.lane= Lane(self.length)
-	self.canvas = Canvas(root, bg="grey", height=100, width=self.length*10)
+	self.canvas = Canvas(root, height=100, width=self.length*10,)
+	self.DefClr = root.cget("bg")
+	self.canvas.configure(background='grey')
 	self.canvas.pack()
 	
 	for i in range(1,self.length+1):
@@ -135,6 +145,10 @@ class App:
 	self.txt_ent = Entry(frame)
 	self.txt_ent.pack()
 
+	Label(frame, text="enter the length of road").pack(side=TOP)
+	self.size_ent = Entry(frame)
+	self.size_ent.pack()
+
 	self.quit = Button(frame, text="QUIT", fg="red", command=frame.quit)
         self.quit.pack(side=LEFT)
 
@@ -143,6 +157,30 @@ class App:
 
 	self.restart = Button(frame, text="Cars", command=self.adding)
         self.restart.pack(side=LEFT)
+
+	self.create_size = Button(frame, text="Length", command=self.lanesize)
+        self.create_size.pack(side=LEFT)
+
+    def lanesize(self):
+	self.canvas.delete(ALL)
+	self.canvas.configure(background=self.DefClr)
+	if not size:
+		pass
+	else:
+		size.pop(0)
+	sizelane = int(self.size_ent.get())
+	size.append(sizelane)
+	self.length = size[0]
+	self.lane= Lane(self.length)
+	gw = .29 
+	self.canvas = Canvas(root, bg="grey", height=100, width=self.length*10,)
+	self.canvas.place(relx=gw,rely=0)
+	
+	for i in range(1,self.length+1):
+		self.canvas.create_line(i*10,0,i*10,100,dash=(3,6))
+	
+	frame = Frame(root)
+	frame.pack()
 
     def adding(self):
 	h=int(self.txt_ent.get())
@@ -177,6 +215,7 @@ class App:
 		col.append(rant)
 		self.canvas.create_rectangle(a2[i],50,a2[i]+10,60,fill=color[rant],tags=cars[i])
 	print cars
+	print self.lane.map
 
     def moving(self):
 	if not numcar:
