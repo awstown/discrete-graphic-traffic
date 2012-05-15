@@ -118,14 +118,14 @@ class Data(object):
         for car in lane.carlist:
             self.position_history.append([])
     def append_position_history(self, lane):
-        for car in lane.carlist:
-            self.position_history[car].append(car.position)
+        for i in range(len(lane.carlist)):
+            self.position_history[i].append(lane.carlist[i].position)
     def build_speed_history(self, lane):
         for car in lane.carlist:
             self.speed_history.append([])
     def append_speed_history(self, lane):
-        for car in lane.carlist:
-            self.speed_history[car].append(car.speed)
+        for i in range(len(lane.carlist)):
+            self.speed_history[i].append(lane.carlist[i].speed)
     def update_length(self, lane):
         self.lane_length = lane.length
     def update_number(self, lane):
