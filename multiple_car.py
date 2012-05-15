@@ -10,7 +10,7 @@ class Car(object):
     """Defines a Car object with attributes position, speed, and g, where g is
 reserved to store the number of empty spaces ahead of the car.
     """
-    def __init__(self, position=0, speed=1):
+    def __init__(self, position=0, speed=0):
         self.position = position
         self.speed = speed
         self.g = 0
@@ -110,6 +110,101 @@ class Lane(object):
         car.position += car.speed
         if car.position > self.length - 1:
             car.position -= self.length
+            
+class Data(object):
+    """A data-holding object which contains histories of each car's position and speed as well as the length of the lane and the number of cars on the lane."""
+    def __init__(self):
+        self.position_history = []
+        self.speed_history = []
+        self.lane_length = 0
+        self.number_of_cars = 0
+    def build_position_history(self, lane):
+        for car in lane.carlist:
+            self.position_history.append([])
+    def append_position_history(self, lane):
+        for i in range(len(lane.carlist)):
+            self.position_history[i].append(lane.carlist[i].position)
+    def build_speed_history(self, lane):
+        for car in lane.carlist:
+            self.speed_history.append([])
+    def append_speed_history(self, lane):
+        for i in range(len(lane.carlist)):
+            self.speed_history[i].append(lane.carlist[i].speed)
+    def update_length(self, lane):
+        self.lane_length = lane.length
+    def update_number(self, lane):
+        self.number_of_cars = len(lane.carlist)
+
+class Rule(object):
+    def update_and_move(car, lane, vmax, p, cc):
+	if car.speed > car.g:
+        	car.speed = car.g
+    	if car.speed < car.g and car.speed < vmax:
+        	car.speed += 1
+    	if car.speed == vmax and cc:
+        	prob = 0
+    	else:
+        	prob = p
+    	if car.speed > 0 and to.random.randint(1, 100) <= 100*prob:
+        	car.speed -= 1
+    	lane.move_car(car)
+
+    def stca(data, lane, vmax, n=10, p=0.50, cc=False):
+    	data.build_position_history(lane)
+    	data.build_speed_history(lane)
+    	data.update_length(lane)
+    	data.update_number(lane)
+    	biglist = []
+    	for j in range(len(lane.carlist)):
+		biglist.append([]) #use this code to create biglist
+    	for i in range(n):
+        	lane.g_update_all()
+        	for car in lane.carlist:
+        	    update_and_move(car, lane, vmax, p, cc)
+		#print lane.carlist
+		for k in range(len(lane.carlist)):
+			biglist[k].append(lane.carlist[k].position)
+        	#this is where you want to grab data for graphs, animation, etc.
+        	data.append_position_history(lane)
+        	data.append_speed_history(lane)
+    	lane.g_update_all()
+    	l = biglist
+    	return biglist
+    
+    def ca184(data, lane, vmax, n=10, cc=False):
+    	"""Use the CA184 model to simulate the specified lane for 'n' discrete steps with a speed limit of 'vmax' (measured in discrete steps). Setting argument 'cc' to 'True' activates Cruise Control mode. 'data' refers to the data-holding object that will store the simulation's data."""
+    	stca(lane, vmax, n, 0, cc)
+    
+    def asep(data, lane, vmax, n=20, p=0, cc=False):
+    	"""Use the ASEP model to simulate the specified lane for 'n' discrete steps with probability 'p' for a car slowing down and with a speed limit of 'vmax' (measured in discrete steps). Setting argument 'cc' to 'True' activates Cruise Control mode. 'data' refers to the data-holding object that will store the simulation's data."""
+    	data.build_position_history(lane)
+    	data.build_speed_history(lane)
+    	data.update_length(lane)
+    	data.update_number(lane)
+    	for i in range(n):
+        	car = to.random.choice(lane.carlist)
+        	update_and_move(car, lane, vmax, p, cc)
+        	#this is where you want to grab data for graphs, animation, etc.
+        	#print lane
+        	data.append_position_history(lane)
+        	data.append_speed_history(lane)
+        	lane.g_update_all()
+
+
+
+
+#lane = Lane(10)
+#lane.populate(3)
+#print lane.map
+#data = Data()
+#data.build_position_history(lane)
+
+#pos = stca(data,lane, 3,10,0, True)
+#print lane
+#print pos
+
+
+#exit()
 
 color = ['snow','gainsboro','linen','moccasin','cornsilk','ivory','cornsilk','seashell','honeydew','azure','green','red','blue','turquoise','cyan','aquamarine','chartreuse','yellow','khaki','gold','goldenrod','sienna','peru','burlywood','beige','tan','chocolate','firebrick','orange','coral','tomato','salmon','pink','maroon','magenta','violet','plum','orchid','purple','thistle','slateblue1','royalblue1','lavenderblush1','skyblue1','SpringGreen2','DarkOliveGreen4','IndianRed1']
 
@@ -118,25 +213,23 @@ numcar=[]
 cars = []
 size = []
 
-lane = Lane(5)
-print lane.map
-lane = Lane(3)
-print lane.map
-
-
-
 class App:
 
     def __init__(self, root):
 	self.length = 10
 	self.lane= Lane(self.length)
+	self.data = Data()
+	self.data.build_position_history(self.lane)
 	self.canvas = Canvas(root, height=100, width=self.length*10,)
 	self.DefClr = root.cget("bg")
-	self.canvas.configure(background='grey')
 	self.canvas.pack()
 	
 	for i in range(1,self.length+1):
 		self.canvas.create_line(i*10,0,i*10,100,dash=(3,6))
+
+	self.canvas.delete(ALL)
+	self.canvas.configure(background=self.DefClr)
+	self.lane = Lane(0)
 	
 	frame = Frame(root)
 	frame.pack()
@@ -162,8 +255,20 @@ class App:
         self.create_size.pack(side=LEFT)
 
     def lanesize(self):
-	self.canvas.delete(ALL)
-	self.canvas.configure(background=self.DefClr)
+	if not numcar:
+		pass
+	else:
+		numcar.pop(0)
+	if not col:
+		pass
+	else:
+		while col:
+			col.pop(0)
+	if not cars:
+		pass
+	else:
+		while cars:
+			cars.pop(0)
 	if not size:
 		pass
 	else:
@@ -204,7 +309,6 @@ class App:
 			cars.pop(0)
 	for g in range(h): # creates strings
 		x = str(g)
-		print x
 		s = 'mycar' + x
 		cars.append(s)
 	self.lane.populate(h)
@@ -224,12 +328,21 @@ class App:
 	print numcar, 'numcar'
 	car_object = self.lane.carlist
 	duration = 5
+	pos = Rule.stca(self.data,self.lane, 3,5,0, True)
+	print pos
 	print car_object
-	for i in range(duration):
-		time.sleep(0.1)
-		for j in range(numcar[0]):
-			pass
-		self.canvas.update()
+	for i in range(len(pos[0])-1):
+		for j in range(len(pos)):
+			time.sleep(0.3)
+			velocity = pos[j][i+1]-pos[j][i]
+			print velocity
+			#self.canvas.move(cars[j],10,0)
+			if pos[j][i+1] > pos[j][i]:
+				self.canvas.move(cars[j],velocity,0)
+			else:
+				self.canvas.delete(cars[j])
+				self.canvas.create_rectangle(pos[j][i+1],50,pos[j][i+1]+10,60, fill=color[col[j]], tags=cars[j])
+	
 
     def reset(self):
 	print 'this also does nothing'
