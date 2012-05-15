@@ -1,4 +1,4 @@
-import multiple_car as to
+import traffic_objects as to
 
 def update_and_move(car, lane, vmax, p, cc):
     """To be used only within other rules definitions. Sets the car's speed appropriately, then moves it."""
@@ -14,23 +14,45 @@ def update_and_move(car, lane, vmax, p, cc):
         car.speed -= 1
     lane.move_car(car)
 
-def stca(lane, vmax, n=10, p=0.50, cc=False):
-    """Use the STCA model to simulate the specified lane for 'n' discrete steps with probability 'p' for a car slowing down and with a speed limit of 'vmax' (measured in discrete steps). Setting argument 'cc' to 'True' activates Cruise Control mode."""
+def stca(data, lane, vmax, n=10, p=0.50, cc=False):
+    """Use the STCA model to simulate the specified lane for 'n' discrete steps with probability 'p' for a car slowing down and with a speed limit of 'vmax' (measured in discrete steps). Setting argument 'cc' to 'True' activates Cruise Control mode. 'data' refers to the data-holding object that will store the simulation's data."""
+    data.build_position_history(lane)
+    data.build_speed_history(lane)
+    data.update_length(lane)
+    data.update_number(lane)
+    biglist = []
+    upscale = 10
+    for j in range(len(lane.carlist)):
+	biglist.append([]) #use this code to create biglist
     for i in range(n):
         lane.g_update_all()
         for car in lane.carlist:
             update_and_move(car, lane, vmax, p, cc)
-        print lane #this is where you want to grab data for graphs, animation, etc.
+	#print lane.carlist
+	for k in range(len(lane.carlist)):
+		biglist[k].append(lane.carlist[k].position*upscale)
+        #this is where you want to grab data for graphs, animation, etc.
+        data.append_position_history(lane)
+        data.append_speed_history(lane)
     lane.g_update_all()
+    l = biglist
+    return biglist
     
-def ca184(lane, vmax, n=10, cc=False):
-    """Use the CA184 model to simulate the specified lane for 'n' discrete steps with a speed limit of 'vmax' (measured in discrete steps). Setting argument 'cc' to 'True' activates Cruise Control mode."""
+def ca184(data, lane, vmax, n=10, cc=False):
+    """Use the CA184 model to simulate the specified lane for 'n' discrete steps with a speed limit of 'vmax' (measured in discrete steps). Setting argument 'cc' to 'True' activates Cruise Control mode. 'data' refers to the data-holding object that will store the simulation's data."""
     stca(lane, vmax, n, 0, cc)
     
-def asep(lane, vmax, n=20, p=0, cc=False):
-    """Use the ASEP model to simulate the specified lane for 'n' discrete steps with probability 'p' for a car slowing down and with a speed limit of 'vmax' (measured in discrete steps). Setting argument 'cc' to 'True' activates Cruise Control mode."""
+def asep(data, lane, vmax, n=20, p=0, cc=False):
+    """Use the ASEP model to simulate the specified lane for 'n' discrete steps with probability 'p' for a car slowing down and with a speed limit of 'vmax' (measured in discrete steps). Setting argument 'cc' to 'True' activates Cruise Control mode. 'data' refers to the data-holding object that will store the simulation's data."""
+    data.build_position_history(lane)
+    data.build_speed_history(lane)
+    data.update_length(lane)
+    data.update_number(lane)
     for i in range(n):
         car = to.random.choice(lane.carlist)
         update_and_move(car, lane, vmax, p, cc)
-        print lane #this is where you want to grab data for graphs, animation, etc.
+        #this is where you want to grab data for graphs, animation, etc.
+        #print lane
+        data.append_position_history(lane)
+        data.append_speed_history(lane)
         lane.g_update_all()
