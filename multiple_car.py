@@ -125,39 +125,43 @@ class App:
 		s = 'mycar' + x
 		cars.append(s)
 	self.lane.populate(h)
-	pos = stca(self.data,self.lane, 1,5,0, True)
-	print pos
-	#pos = self.lane.car_positions() #need different car position from rules biglist
-	#a2 = [x * 10 for x in pos] 
+	self.pos = stca(self.data,self.lane, 1,6,0, True)
+	print self.pos
 	for i in range(h):   #need to extract the first value of every list in biglist
 		rant = random.randint(0,len(color)-1)
 		col.append(rant)
-		self.canvas.create_rectangle(pos[i][0],50,pos[i][0]+10,60,fill=color[rant],tags=cars[i])
+		self.canvas.create_rectangle(self.pos[i][0],50,self.pos[i][0]+10,60,fill=color[rant],tags=cars[i])
 	print cars
-	print self.lane.map
 
     def moving(self):
 	if not numcar:
 		print 'no cars added to lane'
 		return
 	print numcar, 'numcar'
-	car_object = self.lane.carlist
-	duration = 5
-	pos = stca(self.data,self.lane, 1,5,0, True)
-	print pos
-	print car_object
-	for i in range(len(pos[0])-1):
-		time.sleep(0.3)
-		for j in range(len(pos)):
-			velocity = pos[j][i+1]-pos[j][i]
-			print velocity
+	print self.pos
+	print cars
+	for i in range(len(self.pos)): #resets the rectangles to initial position
+		self.canvas.delete(cars[i])
+		self.canvas.create_rectangle(self.pos[i][0],50,self.pos[i][0]+10,60,fill=color[col[i]],tags=cars[i])
+	for i in range(len(self.pos[0])-1):
+		time.sleep(0.6)
+		for j in range(len(self.pos)):
+			velocity = self.pos[j][i+1]-self.pos[j][i]
+			#print velocity
 			#self.canvas.move(cars[j],10,0)
 			self.canvas.update()
-			if pos[j][i+1] > pos[j][i]:
-				self.canvas.move(cars[j],velocity*10,0)
+			if self.pos[j][i+1] > self.pos[j][i]:
+				self.canvas.move(cars[j],velocity,0)
+				self.canvas.update() 
 			else:
+				self.canvas.move(cars[j],self.length*10-self.pos[j][i],0)
+				print self.length*10-self.pos[j][i]
+				self.canvas.update()
 				self.canvas.delete(cars[j])
-				self.canvas.create_rectangle(pos[j][i+1],50,pos[j][i+1]+10,60, fill=color[col[j]], tags=cars[j])
+				self.canvas.update()
+				self.canvas.create_rectangle(0,50,10,60, fill=color[col[j]], tags=cars[j])
+				self.canvas.update()
+				self.canvas.move(cars[j],self.pos[j][i+1],0)
 			self.canvas.update()
 
     def reset(self):
