@@ -51,9 +51,9 @@ class App:
 	self.txt_ent = Entry(frame)
 	self.txt_ent.pack()
 
-	Label(frame, text="enter the length of road").pack(side=TOP)
-	self.size_ent = Entry(frame)
-	self.size_ent.pack()
+	#Label(frame, text="enter the length of road").pack(side=TOP)
+	#self.size_ent = Entry(frame)
+	#self.size_ent.pack()
 
 	self.quit = Button(frame, text="QUIT", fg="red", command=frame.quit)
         self.quit.pack(side=LEFT)
@@ -143,12 +143,11 @@ class App:
 	for i in range(len(self.pos)): #resets the rectangles to initial position
 		self.canvas.delete(cars[i])
 		self.canvas.create_rectangle(self.pos[i][0],50,self.pos[i][0]+10,60,fill=color[col[i]],tags=cars[i])
+	self.canvas.update() #this line very necessary to update original positions
 	for i in range(len(self.pos[0])-1):
 		time.sleep(0.6)
 		for j in range(len(self.pos)):
 			velocity = self.pos[j][i+1]-self.pos[j][i]
-			#print velocity
-			#self.canvas.move(cars[j],10,0)
 			self.canvas.update()
 			if self.pos[j][i+1] > self.pos[j][i]:
 				self.canvas.move(cars[j],velocity,0)
