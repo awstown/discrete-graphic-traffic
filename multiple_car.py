@@ -114,15 +114,47 @@ class Lane(object):
 color = ['snow','gainsboro','linen','moccasin','cornsilk','ivory','cornsilk','seashell','honeydew','azure','green','red','blue','turquoise','cyan','aquamarine','chartreuse','yellow','khaki','gold','goldenrod','sienna','peru','burlywood','beige','tan','chocolate','firebrick','orange','coral','tomato','salmon','pink','maroon','magenta','violet','plum','orchid','purple','thistle','slateblue1','royalblue1','lavenderblush1','skyblue1','SpringGreen2','DarkOliveGreen4','IndianRed1']
 
 
-cars=['mycar0','mycar1','mycar2','mycar3','mycar4','mycar5','mycar6','mycar7','mycar8','mycar9','mycar10','mycar11','mycar12','mycar13','mycar14','mycar15','mycar16','mycar17','mycar18','mycar19','mycar20','mycar21','mycar22','mycar23','mycar24','mycar25','mycar26','mycar27','mycar28','mycar29','mycar30','mycar31','mycar32','mycar33','mycar34','mycar35','mycar36','mycar37','mycar38','mycar39','mycar40','mycar41','mycar42','mycar43','mycar44','mycar45','mycar46','mycar47','mycar48','mycar49','mycar50']
+
 
 col =[]
 numcar=[]
-a5=[]
-a3=[]
-alist, blist, clist, dlist, elist, flist, glist, hlist, ilist, jlist = ([] for i in range(10))
-thelist = [alist,blist,clist,dlist,elist,flist,glist,hlist,ilist,jlist]
+cars = []
 
+
+#def build(n): #use this code to build strings of cars
+#	l=[]
+#	for i in range(n):
+#		x = str(i)
+#		print x
+#		s = 'mycar' + x
+#		l.append(s)
+#	return l
+
+#cars = build(3)
+#print cars
+
+#exit()
+
+#import myrules as mr
+
+#length = 10
+#lane= Lane(length)
+#lane.populate(1)
+#print lane.map
+
+#mr.stca(lane, 2, 10, 0.00, True)
+
+#h = 10
+#biglist =[]
+#for i in range(h):
+#	biglist.append([]) #use this code to create biglist
+#print biglist
+#biglist[0].append(1)
+#biglist[0].append(2)
+#print biglist
+
+thelist =[]
+#exit()
 class App:
 
     def __init__(self, root):
@@ -151,6 +183,10 @@ class App:
         self.restart.pack(side=LEFT)
 
     def adding(self):
+	h=int(self.txt_ent.get())
+	numcar.append(h)
+	#for m in range(numcar[0]):
+	#	thelist.append([])
 	if not self.txt_ent.get():
 		print 'input a number into the blank field'
 		return
@@ -166,14 +202,19 @@ class App:
 			for i in range(len(cars)):
 				self.canvas.delete(cars[i])
 			self.lane.map_update
-		for i in range(len(pos)):   #code for resetting the big list
+		#for i in range(len(pos)):   #code for resetting the big list
 			#print thelist[i], 'the list'
-			while thelist[i]:
-				thelist[i].pop(0)
+			#while thelist[i]:
+			#	thelist[i].pop(0)
 			#print thelist[i], 'the list after'
 			#print thelist, 'the whole list'
-	h=int(self.txt_ent.get())
-	numcar.append(h)
+		while cars:
+			cars.pop(0)
+	for g in range(h): # creates strings
+		x = str(g)
+		print x
+		s = 'mycar' + x
+		cars.append(s)
 	self.lane.populate(h)
 	pos = self.lane.car_positions()
 	a2 = [x * 10 for x in pos] 
@@ -197,15 +238,22 @@ class App:
     	#print car_object[0].position #gets the position of a single car created
 	#a5.append(car_object[0].position) #records the initial position
 	#print a5
-	#print alist
+	#print thelist[0]
 	#print blist
 	#print clist
+	print cars
 
     def moving(self):
 	if not numcar:
 		print 'no cars added to lane'
 		return
 	print numcar, 'numcar'
+	for m in range(numcar[0]):
+		thelist.append([]) #use this code to create biglist 
+
+	print len(thelist)
+	print thelist
+	return
 	for k in range(numcar[0]):   #code for resetting the big list
 			#print k, 'this is k'
 			#print thelist[k], 'the list in moving'
@@ -220,7 +268,7 @@ class App:
 	duration = 5
 	print car_object
 	for i in range(duration):
-		time.sleep(0.5)
+		time.sleep(0.1)
 		#h=int(self.txt_ent.get())
 		for j in range(numcar[0]):
 			self.lane.move_car(car_object[j]) #this is the code for moving cars. will be replaced by rules
@@ -251,6 +299,7 @@ class App:
 	#print blist
 	#print clist
 	#print thelist[0][3]
+	print thelist, 'the whole list in moving'
 
     def reset(self):
 	print 'this also does nothing'
