@@ -125,8 +125,10 @@ class App:
 		s = 'mycar' + x
 		cars.append(s)
 	self.lane.populate(h)
-	self.pos = stca(self.data,self.lane, 1,6,0, True)
+	self.pos = stca(self.data,self.lane, 3,6,0, True)
 	print self.pos
+	self.pos.sort()
+	print self.pos, 'sorted'
 	for i in range(h):   #need to extract the first value of every list in biglist
 		rant = random.randint(0,len(color)-1)
 		col.append(rant)
@@ -145,22 +147,38 @@ class App:
 		self.canvas.create_rectangle(self.pos[i][0],50,self.pos[i][0]+10,60,fill=color[col[i]],tags=cars[i])
 	self.canvas.update() #this line very necessary to update original positions
 	for i in range(len(self.pos[0])-1):
-		time.sleep(0.6)
+		time.sleep(0.9)
 		for j in range(len(self.pos)):
 			velocity = self.pos[j][i+1]-self.pos[j][i]
 			self.canvas.update()
+			x1,y1,x2,y2 = self.canvas.coords(cars[j])
 			if self.pos[j][i+1] > self.pos[j][i]:
-				self.canvas.move(cars[j],velocity,0)
-				self.canvas.update() 
-			else:
-				self.canvas.move(cars[j],self.length*10-self.pos[j][i],0)
-				print self.length*10-self.pos[j][i]
+				#x1,y1,x2,y2 = self.canvas.coords(cars[j])
+				while x1 < self.pos[j][i+1]:
+					time.sleep(0.01)
+					self.canvas.move(cars[j],1,0)
+					self.canvas.update() 
+					x1,y1,x2,y2 = self.canvas.coords(cars[j])
+				#print x1
+			elif self.pos[j][i+1] < self.pos[j][i]:
+				while x1 < self.length*10:
+					pass
+					time.sleep(0.01)
+					self.canvas.move(cars[j],1,0)
+					self.canvas.update() 
+					x1,y1,x2,y2 = self.canvas.coords(cars[j])
 				self.canvas.update()
 				self.canvas.delete(cars[j])
 				self.canvas.update()
 				self.canvas.create_rectangle(0,50,10,60, fill=color[col[j]], tags=cars[j])
 				self.canvas.update()
-				self.canvas.move(cars[j],self.pos[j][i+1],0)
+				x1,y1,x2,y2 = self.canvas.coords(cars[j])
+				while x1 < self.pos[j][i+1]:
+					pass
+					time.sleep(0.01)
+					self.canvas.move(cars[j],1,0)
+					self.canvas.update() 
+					x1,y1,x2,y2 = self.canvas.coords(cars[j])
 			self.canvas.update()
 
     def reset(self):
