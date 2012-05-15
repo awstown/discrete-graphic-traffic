@@ -113,48 +113,10 @@ class Lane(object):
 
 color = ['snow','gainsboro','linen','moccasin','cornsilk','ivory','cornsilk','seashell','honeydew','azure','green','red','blue','turquoise','cyan','aquamarine','chartreuse','yellow','khaki','gold','goldenrod','sienna','peru','burlywood','beige','tan','chocolate','firebrick','orange','coral','tomato','salmon','pink','maroon','magenta','violet','plum','orchid','purple','thistle','slateblue1','royalblue1','lavenderblush1','skyblue1','SpringGreen2','DarkOliveGreen4','IndianRed1']
 
-
-
-
 col =[]
 numcar=[]
 cars = []
 
-
-#def build(n): #use this code to build strings of cars
-#	l=[]
-#	for i in range(n):
-#		x = str(i)
-#		print x
-#		s = 'mycar' + x
-#		l.append(s)
-#	return l
-
-#cars = build(3)
-#print cars
-
-#exit()
-
-#import myrules as mr
-
-#length = 10
-#lane= Lane(length)
-#lane.populate(1)
-#print lane.map
-
-#mr.stca(lane, 2, 10, 0.00, True)
-
-#h = 10
-#biglist =[]
-#for i in range(h):
-#	biglist.append([]) #use this code to create biglist
-#print biglist
-#biglist[0].append(1)
-#biglist[0].append(2)
-#print biglist
-
-thelist =[]
-#exit()
 class App:
 
     def __init__(self, root):
@@ -185,8 +147,6 @@ class App:
     def adding(self):
 	h=int(self.txt_ent.get())
 	numcar.append(h)
-	#for m in range(numcar[0]):
-	#	thelist.append([])
 	if not self.txt_ent.get():
 		print 'input a number into the blank field'
 		return
@@ -202,12 +162,6 @@ class App:
 			for i in range(len(cars)):
 				self.canvas.delete(cars[i])
 			self.lane.map_update
-		#for i in range(len(pos)):   #code for resetting the big list
-			#print thelist[i], 'the list'
-			#while thelist[i]:
-			#	thelist[i].pop(0)
-			#print thelist[i], 'the list after'
-			#print thelist, 'the whole list'
 		while cars:
 			cars.pop(0)
 	for g in range(h): # creates strings
@@ -222,25 +176,6 @@ class App:
 		rant = random.randint(0,len(color)-1)
 		col.append(rant)
 		self.canvas.create_rectangle(a2[i],50,a2[i]+10,60,fill=color[rant],tags=cars[i])
-	#print col, 'prints the index for the color list'
-	#car_object = self.lane.carlist
-	#for i in range(h):
-		#space = self.lane.map.index('n')
-		#self.lane.map.insert(space,'_')
-		#self.lane.map.remove('n')
-		#x1,y1,x2,y2 = self.canvas.coords(cars[i])
-		#thelist[i].append(car_object[i].position)
-		#print x1
-	#self.lane.map_update()
-	#print self.lane.map
-	#print self.lane.car_positions()
-    	#car_object = self.lane.carlist
-    	#print car_object[0].position #gets the position of a single car created
-	#a5.append(car_object[0].position) #records the initial position
-	#print a5
-	#print thelist[0]
-	#print blist
-	#print clist
 	print cars
 
     def moving(self):
@@ -248,58 +183,14 @@ class App:
 		print 'no cars added to lane'
 		return
 	print numcar, 'numcar'
-	for m in range(numcar[0]):
-		thelist.append([]) #use this code to create biglist 
-
-	print len(thelist)
-	print thelist
-	return
-	for k in range(numcar[0]):   #code for resetting the big list
-			#print k, 'this is k'
-			#print thelist[k], 'the list in moving'
-			while thelist[k]:
-				thelist[k].pop(0)
-			#print thelist[k], 'the list after in moving '
-			#print thelist, 'the whole list in moving'
 	car_object = self.lane.carlist
-	for w in range(numcar[0]): # puts the initial position back in
-		thelist[w].append(car_object[w].position)
-	#velocity = 10
 	duration = 5
 	print car_object
 	for i in range(duration):
 		time.sleep(0.1)
-		#h=int(self.txt_ent.get())
 		for j in range(numcar[0]):
-			self.lane.move_car(car_object[j]) #this is the code for moving cars. will be replaced by rules
-			thelist[j].append(car_object[j].position)
-			if thelist[j][i+1] > thelist[j][i]:
-				self.canvas.move(cars[j],10,0)
-			else:
-				self.canvas.delete(cars[j])
-				self.canvas.create_rectangle(thelist[j][i+1],50,thelist[j][i+1]+10,60, fill=color[col[j]], tags=cars[j])
-				
-			#a5.append(car_object[0].position)
-			#x1,y1,x2,y2 = self.canvas.coords(cars[i])
-			#if thelist[i][j]*10+thelist[i][j+1]*10-thelist[i][j]*10 > self.length*10:
-			#	self.canvas.delete(cars[i])
-			#	self.canvas.create_rectangle(0,50,10,60, fill=color[col[i]], tags=cars[i])
-			#elif thelist[i][j]*10+thelist[i][j+1]*10-thelist[i][j]*10 == self.length*10:
-			#	self.canvas.delete(cars[i])
-			#	self.canvas.create_rectangle(0,50,10,60, fill=color[col[i]], tags=cars[i])
-			#else:
-			#	self.canvas.move(cars[i],thelist[i][j+1]-thelist[i][j],0)
-			#x1,y1,x2,y2 = self.canvas.coords(cars[i])
-		#a3.append(x1) 
+			pass
 		self.canvas.update()
-	print car_object[0].position,'end position'
-	#print a5,#prints the actual map location of car
-	#print a3 #prints the location of rectangle which represents car
-	#print alist, 'youou'
-	#print blist
-	#print clist
-	#print thelist[0][3]
-	print thelist, 'the whole list in moving'
 
     def reset(self):
 	print 'this also does nothing'
