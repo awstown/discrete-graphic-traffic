@@ -5,7 +5,7 @@ from Tkinter import *
 root = Tk()
 root.title("Traffic Simulation")
 import time
-from myrules import *
+from rules import *
 
 
 
@@ -19,6 +19,7 @@ from myrules import *
 #print lane
 #print pos
 #exit()
+
 color = ['snow','gainsboro','linen','moccasin','cornsilk','ivory','cornsilk','seashell','honeydew','azure','green','red','blue','turquoise','cyan','aquamarine','chartreuse','yellow','khaki','gold','goldenrod','sienna','peru','burlywood','beige','tan','chocolate','firebrick','orange','coral','tomato','salmon','pink','maroon','magenta','violet','plum','orchid','purple','thistle','slateblue1','royalblue1','lavenderblush1','skyblue1','SpringGreen2','DarkOliveGreen4','IndianRed1']
 
 col =[]
@@ -111,7 +112,8 @@ class App:
 		pass
 	else:
 		numcar.pop(0)
-		while self.lane.car_positions():
+		while self.pos:
+			self.pos.pop(0)
 			col.pop(0) 
 			a = self.lane.carlist[0]
 			self.lane.remove_car(a)
@@ -125,15 +127,15 @@ class App:
 		s = 'mycar' + x
 		cars.append(s)
 	self.lane.populate(h)
-	self.pos = stca(self.data,self.lane, 3,6,0, True)
+	stca(self.data,self.lane, 3,6,0, True) ## run code to generate car history
+	self.pos = self.data.position_history
 	print self.pos
 	self.pos.sort()
 	print self.pos, 'sorted'
-	for i in range(h):   #need to extract the first value of every list in biglist
+	for i in range(len(self.pos)):   #need to extract the first value of every list
 		rant = random.randint(0,len(color)-1)
 		col.append(rant)
 		self.canvas.create_rectangle(self.pos[i][0],50,self.pos[i][0]+10,60,fill=color[rant],tags=cars[i])
-	print cars
 
     def moving(self):
 	if not numcar:
