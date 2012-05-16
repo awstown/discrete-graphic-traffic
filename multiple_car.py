@@ -114,7 +114,7 @@ class App:
 		s = 'mycar' + x
 		cars.append(s)
 	self.lane.populate(h)
-	stca(self.data,self.lane, 3,6,0, True) ## run code to generate car history
+	stca(self.data,self.lane, 4,15,0, True) ## run code to generate car history
 	self.pos = self.data.position_history
 	print self.pos
 	self.pos.sort()
@@ -135,40 +135,83 @@ class App:
 		self.canvas.delete(cars[i])
 		self.canvas.create_rectangle(self.pos[i][0],50,self.pos[i][0]+10,60,fill=color[col[i]],tags=cars[i])
 	self.canvas.update() #this line very necessary to update original positions
+	ind = []
 	for i in range(len(self.pos[0])-1):
-		time.sleep(0.9)
-		for j in range(len(self.pos)):
-			velocity = self.pos[j][i+1]-self.pos[j][i]
+		time.sleep(0.5)
+		xx = 0
+		self.canvas.update()
+		x1=0
+		while xx < 10:
+			xx = xx + 1
+			time.sleep(0.1)
+			for j in range(len(self.pos)):
+				if self.pos[j][i+1] > self.pos[j][i]:
+					vel = (self.pos[j][i+1] - self.pos[j][i])/10
+					self.canvas.move(cars[j],vel,0)
+					self.canvas.update()
+				elif self.pos[j][i+1] < self.pos[j][i]:
+					vel2 = (self.length*10 - self.pos[j][i])/10
+					self.canvas.move(cars[j],vel2,0)
+					self.canvas.update()
+					#self.canvas.delete(cars[j])
+					#self.canvas.update()
+					#self.canvas.create_rectangle(0,50,10,60, fill=color[col[j]], tags=cars[j])
+					#self.canvas.update()
+					#vel3 = self.pos[j][i+1]/10
+					#self.canvas.move(cars[j],vel3,0)
+					#self.canvas.update()
+					if not ind:
+						pass
+					else:
+						ind.pop(0)
+					ind.append(j)
+					x1,y1,x2,y2 = self.canvas.coords(cars[j])
+		#print x1
+		#print ind[0]	
+		if x1 == self.length*10:
+			#print 'true'
+			self.canvas.delete(cars[ind[0]])
+			self.canvas.create_rectangle(0,50,10,60, fill=color[col[ind[0]]], tags=cars[ind[0]])
 			self.canvas.update()
-			x1,y1,x2,y2 = self.canvas.coords(cars[j])
-			if self.pos[j][i+1] > self.pos[j][i]:
-				#x1,y1,x2,y2 = self.canvas.coords(cars[j])
-				while x1 < self.pos[j][i+1]:
-					time.sleep(0.01)
-					self.canvas.move(cars[j],1,0)
-					self.canvas.update() 
-					x1,y1,x2,y2 = self.canvas.coords(cars[j])
-				#print x1
-			elif self.pos[j][i+1] < self.pos[j][i]:
-				while x1 < self.length*10:
-					pass
-					time.sleep(0.01)
-					self.canvas.move(cars[j],1,0)
-					self.canvas.update() 
-					x1,y1,x2,y2 = self.canvas.coords(cars[j])
+			#x1,y1,x2,y2 = self.canvas.coords(cars[j])
+			#print x1, 'yoo', self.pos[ind[0]][i+1]
+			time.sleep(0.1)
+			xy = 0
+			while xy < 10:
+				time.sleep(0.01)
+				xy = xy+1
+				veloc = (self.pos[ind[0]][i+1])/10
+				#print veloc
+				self.canvas.move(cars[ind[0]],veloc,0)
 				self.canvas.update()
-				self.canvas.delete(cars[j])
-				self.canvas.update()
-				self.canvas.create_rectangle(0,50,10,60, fill=color[col[j]], tags=cars[j])
-				self.canvas.update()
-				x1,y1,x2,y2 = self.canvas.coords(cars[j])
-				while x1 < self.pos[j][i+1]:
-					pass
-					time.sleep(0.01)
-					self.canvas.move(cars[j],1,0)
-					self.canvas.update() 
-					x1,y1,x2,y2 = self.canvas.coords(cars[j])
-			self.canvas.update()
+		self.canvas.update()
+
+		#for j in range(len(self.pos)):
+		#	#velocity = self.pos[j][i+1]-self.pos[j][i]
+		#	self.canvas.update()
+		#	#x1,y1,x2,y2 = self.canvas.coords(cars[j])
+		#	if self.pos[j][i+1] > self.pos[j][i]:
+		#		while xx < 10:
+		#			xx = xx + 1
+		#			time.sleep(0.1)
+		#			for g in range(len(self.pos)):
+		#				vel = (self.pos[g][i+1] - self.pos[g][i])/10
+		#				self.canvas.move(cars[g],vel,0)
+		#			self.canvas.update()
+		#			#print xx
+		#		#xx = 0
+		#	elif self.pos[j][i+1] < self.pos[j][i]:
+		#		while xx < 10:
+		#			xx = xx + 1
+		#			time.sleep(0.01)
+		#			vel = (self.length*10 - self.pos[j][i])/10
+		#			for g in range(len(self.pos)):
+		#				vel = (self.length*10 - self.pos[g][i])/10
+		#				self.canvas.move(cars[g],vel,0)	
+		#			self.canvas.update()
+		#			print vel
+		#	
+		#	self.canvas.update()
 
     def reset(self):
 	print 'this also does nothing'
