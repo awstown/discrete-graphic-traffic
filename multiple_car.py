@@ -7,19 +7,6 @@ root.title("Traffic Simulation")
 import time
 from rules import *
 
-
-
-#lane = to.Lane(10)
-#lane.populate(3)
-#print lane.map
-#data = to.Data()
-#data.build_position_history(lane)
-
-#pos = stca(data,lane, 3,10,0, True)
-#print lane
-#print pos
-#exit()
-
 color = ['snow','gainsboro','linen','moccasin','cornsilk','ivory','cornsilk','seashell','honeydew','azure','green','red','blue','turquoise','cyan','aquamarine','chartreuse','yellow','khaki','gold','goldenrod','sienna','peru','burlywood','beige','tan','chocolate','firebrick','orange','coral','tomato','salmon','pink','maroon','magenta','violet','plum','orchid','purple','thistle','slateblue1','royalblue1','lavenderblush1','skyblue1','SpringGreen2','DarkOliveGreen4','IndianRed1']
 
 col =[]
