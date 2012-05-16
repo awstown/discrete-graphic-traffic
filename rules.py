@@ -48,4 +48,8 @@ def asep(data, lane, vmax, n=20, p=0, cc=False):
         data.append_position_history(lane)
         data.append_speed_history(lane)
         lane.g_update_all()
+<<<<<<< HEAD
     
+=======
+    
+>>>>>>> dev

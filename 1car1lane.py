@@ -6,6 +6,7 @@
 #of underscores. Each line printed represents a single moment
 #in time.
 
+<<<<<<< HEAD
 #import Tkinter as tk
 #import time
 #root = tk.Tk()
@@ -13,6 +14,8 @@
 #canvas = tk.Canvas(root, width =1000,height=300)
 #canvas.pack
 
+=======
+>>>>>>> dev
 class Car(object):
     def __init__(self, pos=0, vel=0):
         self.position = pos
@@ -41,6 +44,7 @@ class Lane(object):
                 car.position = car.position - self.length
             self.map[car.position] = 'n'
 
+<<<<<<< HEAD
 length = 100
 vel = 6
 lane = Lane(length)
@@ -160,3 +164,15 @@ x1, y1, x2,y2 = canvas.coords('mycar')
 app = App(root)
 root.mainloop()
 
+=======
+length = int(raw_input('Length of the lane: '))
+vel = int(raw_input('Speed of the car: '))
+lane = Lane(length)
+toyota = Car(0, vel)
+lane.add_car(toyota)
+for i in range(19):
+    print lane
+    lane.update_all()
+print lane
+        
+>>>>>>> dev

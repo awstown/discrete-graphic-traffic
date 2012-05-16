@@ -106,6 +106,7 @@ class Lane(object):
         car.position += car.speed
         if car.position > self.length - 1:
             car.position -= self.length
+<<<<<<< HEAD
             
 class Data(object):
     """A data-holding object which contains histories of each car's position and speed as well as the length of the lane and the number of cars on the lane."""
@@ -130,3 +131,5 @@ class Data(object):
         self.lane_length = lane.length
     def update_number(self, lane):
         self.number_of_cars = len(lane.carlist)
+=======
+>>>>>>> dev
