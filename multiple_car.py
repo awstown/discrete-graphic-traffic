@@ -17,21 +17,22 @@ size = []
 class App:
 
     def __init__(self, root):
-	self.length = 10
+	self.length = 30
 	self.lane= to.Lane(self.length)
 	self.data = to.Data()
 	self.data.build_position_history(self.lane)
 	self.canvas = Canvas(root,bg="grey", height=100, width=self.length*10,)
-	#self.DefClr = root.cget("bg")
+	self.DefClr = root.cget("bg")
 	self.canvas.pack()
 	
-	for i in range(1,self.length+1):
-		self.canvas.create_line(i*10,0,i*10,100,dash=(3,6))
+	#for i in range(1,self.length+1):
+	#	self.canvas.create_line(i*10,0,i*10,100,dash=(3,6))
 
-	#self.canvas.delete(ALL)
-	#self.canvas.configure(background=self.DefClr)
-	#self.lane = to.Lane(0)
+	self.canvas.delete(ALL)
+	self.canvas.configure(background=self.DefClr)
+	self.lane = to.Lane(0)
 	
+	root.geometry("500x250")
 	frame = Frame(root)
 	frame.pack()
 	
@@ -39,9 +40,13 @@ class App:
 	self.txt_ent = Entry(frame)
 	self.txt_ent.pack()
 
-	#Label(frame, text="enter the length of road").pack(side=TOP)
-	#self.size_ent = Entry(frame)
-	#self.size_ent.pack()
+	Label(frame, text="enter the length of road").pack(side=TOP)
+	self.size_ent = Entry(frame)
+	self.size_ent.pack()
+
+	Label(frame, text="enter the duration").pack(side=TOP)
+	self.time_ent = Entry(frame)
+	self.time_ent.pack()
 
 	self.quit = Button(frame, text="QUIT", fg="red", command=frame.quit)
         self.quit.pack(side=LEFT)
@@ -78,7 +83,8 @@ class App:
 	size.append(sizelane)
 	self.length = size[0]
 	self.lane= to.Lane(self.length)
-	gw = .29 
+	#gw = .29
+	gw = 0 
 	self.canvas = Canvas(root, bg="grey", height=100, width=self.length*10,)
 	self.canvas.place(relx=gw,rely=0)
 	
@@ -90,11 +96,20 @@ class App:
 
     def adding(self):
 	if not self.txt_ent.get():
-		print 'input a number into the blank field'
+		print 'input the number of cars'
+		return
+	if not self.size_ent.get():
+		print 'input the length of the road'
+		return
+	if not self.time_ent.get():
+		print 'input the duration'
 		return
 	h=int(self.txt_ent.get())
+	gg = int(self.size_ent.get())
+	kk = int(self.time_ent.get())
 	numcar.append(h)
 	pos = self.lane.car_positions()
+	#print pos
 	if not pos:
 		pass
 	else:
@@ -113,12 +128,25 @@ class App:
 		x = str(g)
 		s = 'mycar' + x
 		cars.append(s)
+	## add lane
+	self.length = gg
+	self.lane= to.Lane(self.length)
+	self.canvas = Canvas(root,bg="grey", height=100, width=self.length*10)
+	gw = .29 
+	self.canvas.place(relx=gw,rely=0)
+	self.canvas.update()
+	for i in range(1,self.length+1):
+		self.canvas.create_line(i*10,0,i*10,100,dash=(3,6))
+	frame = Frame(root)
+	frame.pack()
+	##
 	self.lane.populate(h)
-	stca(self.data,self.lane, 4,15,0, True) ## run code to generate car history
+	self.duration = 4
+	stca(self.data,self.lane, 4,self.duration,0, True) ## run code to generate car history
 	self.pos = self.data.position_history
-	print self.pos
 	self.pos.sort()
-	print self.pos, 'sorted'
+	print self.pos
+	#print self.pos, 'sorted'
 	for i in range(len(self.pos)):   #need to extract the first value of every list
 		rant = random.randint(0,len(color)-1)
 		col.append(rant)
@@ -128,22 +156,53 @@ class App:
 	if not numcar:
 		print 'no cars added to lane'
 		return
-	print numcar, 'numcar'
+	#print numcar, 'numcar'
+	#print self.pos
+	#print cars
+	##clear initial histories
+	#if self.data.position_history:
+	#	print 'hey'
+	#	for j in range(len(self.data.position_history)):
+	#		while self.data.position_history[j]:
+	#			self.data.position_history[j].pop(0)
+	## recalculate position histories
+	kk = int(self.time_ent.get())
+	self.duration2 = kk
+	print self.data.position_history, 'before i do another calculation'
+	initial_pos = []
+	for i in range(len(self.data.position_history)):
+		initial_pos.append(self.data.position_history[i][0])
+	print initial_pos, 'initial pos' 
+	for i in range(len(self.data.position_history)):
+		for j in range(len(self.data.position_history[i])):
+			self.data.position_history[i].pop(0)
+	print self.data.position_history, 'history'
+	for i in range(len(self.data.position_history)):
+		self.data.position_history[i].append(initial_pos[i])
+	print self.data.position_history, 'after'
+	#return
+	stca(self.data,self.lane, 4,self.duration2,0, True) ## run code to generate car history
+	self.data.position_history = [x for x in self.data.position_history if x != []]
+	#for i in range(len(self.data.position_history)):
+	
+	#	for j in range(self.duration):
+	#		self.data.position_history[i].pop(0)
+	self.pos = self.data.position_history
 	print self.pos
-	print cars
+	return
 	for i in range(len(self.pos)): #resets the rectangles to initial position
 		self.canvas.delete(cars[i])
 		self.canvas.create_rectangle(self.pos[i][0],50,self.pos[i][0]+10,60,fill=color[col[i]],tags=cars[i])
 	self.canvas.update() #this line very necessary to update original positions
 	ind = []
 	for i in range(len(self.pos[0])-1):
-		time.sleep(0.5)
+		time.sleep(0.2)
 		xx = 0
 		self.canvas.update()
 		x1=0
 		while xx < 10:
 			xx = xx + 1
-			time.sleep(0.1)
+			time.sleep(0.05)
 			for j in range(len(self.pos)):
 				if self.pos[j][i+1] > self.pos[j][i]:
 					vel = (self.pos[j][i+1] - self.pos[j][i])/10
@@ -153,13 +212,6 @@ class App:
 					vel2 = (self.length*10 - self.pos[j][i])/10
 					self.canvas.move(cars[j],vel2,0)
 					self.canvas.update()
-					#self.canvas.delete(cars[j])
-					#self.canvas.update()
-					#self.canvas.create_rectangle(0,50,10,60, fill=color[col[j]], tags=cars[j])
-					#self.canvas.update()
-					#vel3 = self.pos[j][i+1]/10
-					#self.canvas.move(cars[j],vel3,0)
-					#self.canvas.update()
 					if not ind:
 						pass
 					else:
@@ -175,7 +227,7 @@ class App:
 			self.canvas.update()
 			#x1,y1,x2,y2 = self.canvas.coords(cars[j])
 			#print x1, 'yoo', self.pos[ind[0]][i+1]
-			time.sleep(0.1)
+			time.sleep(0.05)
 			xy = 0
 			while xy < 10:
 				time.sleep(0.01)
@@ -186,32 +238,6 @@ class App:
 				self.canvas.update()
 		self.canvas.update()
 
-		#for j in range(len(self.pos)):
-		#	#velocity = self.pos[j][i+1]-self.pos[j][i]
-		#	self.canvas.update()
-		#	#x1,y1,x2,y2 = self.canvas.coords(cars[j])
-		#	if self.pos[j][i+1] > self.pos[j][i]:
-		#		while xx < 10:
-		#			xx = xx + 1
-		#			time.sleep(0.1)
-		#			for g in range(len(self.pos)):
-		#				vel = (self.pos[g][i+1] - self.pos[g][i])/10
-		#				self.canvas.move(cars[g],vel,0)
-		#			self.canvas.update()
-		#			#print xx
-		#		#xx = 0
-		#	elif self.pos[j][i+1] < self.pos[j][i]:
-		#		while xx < 10:
-		#			xx = xx + 1
-		#			time.sleep(0.01)
-		#			vel = (self.length*10 - self.pos[j][i])/10
-		#			for g in range(len(self.pos)):
-		#				vel = (self.length*10 - self.pos[g][i])/10
-		#				self.canvas.move(cars[g],vel,0)	
-		#			self.canvas.update()
-		#			print vel
-		#	
-		#	self.canvas.update()
 
     def reset(self):
 	print 'this also does nothing'
