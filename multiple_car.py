@@ -152,7 +152,7 @@ class App:
 	createToolTip(self.check, "leave this checked for now")
 	createToolTip(self.R1, "moves all cars at once")
 	createToolTip(self.R2, "not programmed yet")
-	createToolTip(self.R3, "not programmed yetf")
+	createToolTip(self.R3, "not programmed yet")
 	##
 
 	self.quit = Button(centerframe, text="QUIT", fg="red", command=frame.quit)
