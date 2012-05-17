@@ -66,7 +66,7 @@ class App:
 	R1.select()
 	self.check.select()
 	selection = "traffic simulation in " + str(mode[self.var2.get()]) + " mode"
-	self.label.config(text = selection)
+	self.label.config(text = selection, bg = "grey",bd = 1, relief = SUNKEN)
 
 	#Label(frame, text="probability that drivers will slow down").pack(side=TOP)
 	sim = "probability that drivers will slow down"
