@@ -15,6 +15,7 @@ cars = []
 size = []
 mode = ['','stca','asep','ca184']
 bool = ['True','False']
+xy = []
 
 class ToolTip(object):
 
@@ -83,7 +84,9 @@ class App:
 	self.canvas.configure(background=self.DefClr)
 	self.lane = to.Lane(0)
 
-	root.geometry("650x300")
+	#root.geometry("650x300")
+	self.topframe = Frame(root)
+	self.topframe.pack(side=TOP)
 	otherframe = Frame(root)
 	otherframe.pack(side=LEFT)
 	centerframe = Frame(root)
@@ -142,8 +145,8 @@ class App:
 	self.velocity_ent.pack()
 
 	## enter initial values
-	self.txt_ent.insert(0, "5")
-	self.size_ent.insert(0, "20")
+	self.txt_ent.insert(0, "10")
+	self.size_ent.insert(0, "60")
 	self.time_ent.insert(0, "11")
 	self.velocity_ent.insert(0, "3")
 	##
@@ -173,40 +176,6 @@ class App:
     def sel(self):
    	selection = "traffic simulation in " + str(mode[self.var2.get()]) + " mode"
 	self.label.config(text = selection)
-
-    def lanesize(self):
-	if not numcar:
-		pass
-	else:
-		numcar.pop(0)
-	if not col:
-		pass
-	else:
-		while col:
-			col.pop(0)
-	if not cars:
-		pass
-	else:
-		while cars:
-			cars.pop(0)
-	if not size:
-		pass
-	else:
-		size.pop(0)
-	sizelane = int(self.size_ent.get())
-	size.append(sizelane)
-	self.length = size[0]
-	self.lane= to.Lane(self.length)
-	#gw = .29
-	gw = 0 
-	self.canvas = Canvas(root, bg="grey", height=100, width=self.length*10,)
-	self.canvas.place(relx=gw,rely=0)
-
-	for i in range(1,self.length+1):
-		self.canvas.create_line(i*10,0,i*10,100,dash=(3,6))
-
-	frame = Frame(root)
-	frame.pack()
 
     def adding(self):
 	if not self.txt_ent.get():
@@ -245,17 +214,21 @@ class App:
 		x = str(g)
 		s = 'mycar' + x
 		cars.append(s)
+	#self.canvas.delete(ALL)
+	self.canvas.destroy()
 	## add lane
 	self.length = gg
 	self.lane= to.Lane(self.length)
-	self.canvas = Canvas(root,bg="grey", height=100, width=self.length*10)
+	self.canvas = Canvas(self.topframe,bg="grey", height=100, width=self.length*10)
 	gw = .29 
 	self.canvas.place(relx=gw,rely=0)
 	self.canvas.update()
+	self.canvas.pack()
 	for i in range(1,self.length+1):
 		self.canvas.create_line(i*10,0,i*10,100,dash=(3,6))
-	frame = Frame(root)
-	frame.pack()
+	
+	#frame = Frame(root)
+	#frame.pack()
 	##
 	self.lane.populate(h)
 	duration = kk
