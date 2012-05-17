@@ -141,11 +141,11 @@ class App:
 	frame.pack()
 	##
 	self.lane.populate(h)
-	self.duration = 4
-	stca(self.data,self.lane, 4,self.duration,0, True) ## run code to generate car history
+	duration = kk
+	stca(self.data,self.lane, 4,duration,0, True) ## run code to generate car history
 	self.pos = self.data.position_history
+	#print self.pos
 	self.pos.sort()
-	print self.pos
 	#print self.pos, 'sorted'
 	for i in range(len(self.pos)):   #need to extract the first value of every list
 		rant = random.randint(0,len(color)-1)
@@ -159,37 +159,6 @@ class App:
 	#print numcar, 'numcar'
 	#print self.pos
 	#print cars
-	##clear initial histories
-	#if self.data.position_history:
-	#	print 'hey'
-	#	for j in range(len(self.data.position_history)):
-	#		while self.data.position_history[j]:
-	#			self.data.position_history[j].pop(0)
-	## recalculate position histories
-	kk = int(self.time_ent.get())
-	self.duration2 = kk
-	print self.data.position_history, 'before i do another calculation'
-	initial_pos = []
-	for i in range(len(self.data.position_history)):
-		initial_pos.append(self.data.position_history[i][0])
-	print initial_pos, 'initial pos' 
-	for i in range(len(self.data.position_history)):
-		for j in range(len(self.data.position_history[i])):
-			self.data.position_history[i].pop(0)
-	print self.data.position_history, 'history'
-	for i in range(len(self.data.position_history)):
-		self.data.position_history[i].append(initial_pos[i])
-	print self.data.position_history, 'after'
-	#return
-	stca(self.data,self.lane, 4,self.duration2,0, True) ## run code to generate car history
-	self.data.position_history = [x for x in self.data.position_history if x != []]
-	#for i in range(len(self.data.position_history)):
-	
-	#	for j in range(self.duration):
-	#		self.data.position_history[i].pop(0)
-	self.pos = self.data.position_history
-	print self.pos
-	return
 	for i in range(len(self.pos)): #resets the rectangles to initial position
 		self.canvas.delete(cars[i])
 		self.canvas.create_rectangle(self.pos[i][0],50,self.pos[i][0]+10,60,fill=color[col[i]],tags=cars[i])
