@@ -13,6 +13,8 @@ col =[]
 numcar=[]
 cars = []
 size = []
+mode = ['','stca','asep','ca184']
+bool = ['True','False']
 
 class App:
 
@@ -32,24 +34,62 @@ class App:
 	self.canvas.configure(background=self.DefClr)
 	self.lane = to.Lane(0)
 
-	root.geometry("500x300")
+	root.geometry("650x300")
+	otherframe = Frame(root)
+	otherframe.pack(side=LEFT)
+	centerframe = Frame(root)
+	centerframe.pack(side=LEFT)
 	frame = Frame(root)
-	frame.pack()
+	frame.pack(side=LEFT)
 
-	Label(frame, text="enter the number of cars:").pack(side=TOP)
-	self.txt_ent = Entry(frame)
+	self.label = Label(otherframe)
+	self.label.pack()
+
+	self.label2 = Label(frame)
+	self.label2.pack()
+
+	self.var = IntVar()
+	self.var3 = IntVar()
+	self.check = Checkbutton(otherframe, text="Cruise Control", variable=self.var3)
+	self.check.pack(side=RIGHT)
+
+	self.var2 = IntVar()
+	R1 = Radiobutton(otherframe, text="stca", variable=self.var2, value=1, command=self.sel)
+	R1.pack( anchor = W )
+
+	R2 = Radiobutton(otherframe, text="asep", variable=self.var2, value=2, command=self.sel)
+	R2.pack( anchor = W )
+	
+	R3 = Radiobutton(otherframe, text="ca184", variable=self.var2, value=3, command=self.sel)
+	R3.pack( anchor = W)
+	
+	R1.select()
+	self.check.select()
+	selection = "traffic simulation in " + str(mode[self.var2.get()]) + " mode"
+	self.label.config(text = selection)
+
+	#Label(frame, text="probability that drivers will slow down").pack(side=TOP)
+	sim = "probability that drivers will slow down"
+	self.label2.config(text = sim)
+	self.spin = Spinbox(frame, from_=0, to=1,increment = .1)
+	self.spin.pack(side=RIGHT)
+	
+
+	Label(centerframe, text="enter the number of cars:").pack(side=TOP)
+	
+	self.txt_ent = Entry(centerframe)
 	self.txt_ent.pack()
 
-	Label(frame, text="enter the length of road").pack(side=TOP)
-	self.size_ent = Entry(frame)
+	Label(centerframe, text="enter the length of road").pack(side=TOP)
+	self.size_ent = Entry(centerframe)
 	self.size_ent.pack()
 
-	Label(frame, text="enter the duration").pack(side=TOP)
-	self.time_ent = Entry(frame)
+	Label(centerframe, text="enter the duration").pack(side=TOP)
+	self.time_ent = Entry(centerframe)
 	self.time_ent.pack()
 
-	Label(frame, text="enter the max velocity").pack(side=TOP)
-	self.velocity_ent = Entry(frame)
+	Label(centerframe, text="enter the max velocity").pack(side=TOP)
+	self.velocity_ent = Entry(centerframe)
 	self.velocity_ent.pack()
 
 	## enter initial values
@@ -59,17 +99,24 @@ class App:
 	self.velocity_ent.insert(0, "3")
 	##
 
-	self.quit = Button(frame, text="QUIT", fg="red", command=frame.quit)
+	self.quit = Button(centerframe, text="QUIT", fg="red", command=frame.quit)
         self.quit.pack(side=LEFT)
 
-	self.play = Button(frame, text="Play", command=self.moving)
+	self.play = Button(centerframe, text="Play", command=self.moving)
         self.play.pack(side=LEFT)
 
-	self.restart = Button(frame, text="Create Road", command=self.adding)
+	self.restart = Button(centerframe, text="Create Road", command=self.adding)
         self.restart.pack(side=LEFT)
 
 	#self.create_size = Button(frame, text="Length", command=self.lanesize)
         #self.create_size.pack(side=LEFT)
+
+    #def cb(self):
+    #    print "variable is", self.var.get()
+
+    def sel(self):
+   	selection = "traffic simulation in " + str(mode[self.var2.get()]) + " mode"
+	self.label.config(text = selection)
 
     def lanesize(self):
 	if not numcar:
@@ -157,7 +204,14 @@ class App:
 	self.lane.populate(h)
 	duration = kk
 	max_v = int(self.velocity_ent.get())
-	stca(self.data,self.lane, max_v,duration,0, True) ## run code to generate car history
+	prob = self.spin.get()
+	prob_int = float(prob)
+	cruise = self.var3.get()
+	if cruise == 1:
+		cruise_bool = bool[0]
+	else:
+		cruise_bool = bool[1]
+	stca(self.data,self.lane, max_v,duration,prob_int,cruise_bool) ## run code to generate car history
 	self.pos = self.data.position_history
 	#print self.pos
 	self.pos.sort()
