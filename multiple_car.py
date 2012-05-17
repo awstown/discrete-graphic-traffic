@@ -16,6 +16,55 @@ size = []
 mode = ['','stca','asep','ca184']
 bool = ['True','False']
 
+class ToolTip(object):
+
+    def __init__(self, widget):
+        self.widget = widget
+        self.tipwindow = None
+        self.id = None
+        self.x = self.y = 0
+
+    def showtip(self, text):
+        "Display text in tooltip window"
+        self.text = text
+        if self.tipwindow or not self.text:
+            return
+        x, y, cx, cy = self.widget.bbox("insert")
+        x = x + self.widget.winfo_rootx() + 27
+        y = y + cy + self.widget.winfo_rooty() +27
+        self.tipwindow = tw = Toplevel(self.widget)
+        tw.wm_overrideredirect(1)
+        tw.wm_geometry("+%d+%d" % (x, y))
+        try:
+            # For Mac OS
+            tw.tk.call("::tk::unsupported::MacWindowStyle",
+                       "style", tw._w,
+                       "help", "noActivates")
+        except TclError:
+            pass
+        label = Label(tw, text=self.text, justify=LEFT,
+                      background="#ffffe0", relief=SOLID, borderwidth=1,
+                      font=("tahoma", "8", "normal"))
+        label.pack(ipadx=1)
+
+    def hidetip(self):
+        tw = self.tipwindow
+        self.tipwindow = None
+        if tw:
+            tw.destroy()
+
+def createToolTip(widget, text):
+    toolTip = ToolTip(widget)
+    def enter(event):
+        toolTip.showtip(text)
+    def leave(event):
+        toolTip.hidetip()
+    widget.bind('<Enter>', enter)
+    widget.bind('<Leave>', leave)
+
+
+
+
 class App:
 
     def __init__(self, root):
@@ -54,16 +103,16 @@ class App:
 	self.check.pack(side=RIGHT)
 
 	self.var2 = IntVar()
-	R1 = Radiobutton(otherframe, text="stca", variable=self.var2, value=1, command=self.sel)
-	R1.pack( anchor = W )
+	self.R1 = Radiobutton(otherframe, text="stca", variable=self.var2, value=1, command=self.sel)
+	self.R1.pack( anchor = W )
 
-	R2 = Radiobutton(otherframe, text="asep", variable=self.var2, value=2, command=self.sel)
-	R2.pack( anchor = W )
+	self.R2 = Radiobutton(otherframe, text="asep", variable=self.var2, value=2, command=self.sel)
+	self.R2.pack( anchor = W )
 	
-	R3 = Radiobutton(otherframe, text="ca184", variable=self.var2, value=3, command=self.sel)
-	R3.pack( anchor = W)
+	self.R3 = Radiobutton(otherframe, text="ca184", variable=self.var2, value=3, command=self.sel)
+	self.R3.pack( anchor = W)
 	
-	R1.select()
+	self.R1.select()
 	self.check.select()
 	selection = "traffic simulation in " + str(mode[self.var2.get()]) + " mode"
 	self.label.config(text = selection, bg = "grey",bd = 1, relief = SUNKEN)
@@ -97,6 +146,13 @@ class App:
 	self.size_ent.insert(0, "20")
 	self.time_ent.insert(0, "11")
 	self.velocity_ent.insert(0, "3")
+	##
+
+	## create hover text
+	createToolTip(self.check, "leave this checked for now")
+	createToolTip(self.R1, "moves all cars at once")
+	createToolTip(self.R2, "not programmed yet")
+	createToolTip(self.R3, "not programmed yetf")
 	##
 
 	self.quit = Button(centerframe, text="QUIT", fg="red", command=frame.quit)
