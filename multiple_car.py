@@ -24,18 +24,18 @@ class App:
 	self.canvas = Canvas(root,bg="grey", height=100, width=self.length*10,)
 	self.DefClr = root.cget("bg")
 	self.canvas.pack()
-	
+
 	#for i in range(1,self.length+1):
 	#	self.canvas.create_line(i*10,0,i*10,100,dash=(3,6))
 
 	self.canvas.delete(ALL)
 	self.canvas.configure(background=self.DefClr)
 	self.lane = to.Lane(0)
-	
-	root.geometry("500x250")
+
+	root.geometry("500x300")
 	frame = Frame(root)
 	frame.pack()
-	
+
 	Label(frame, text="enter the number of cars:").pack(side=TOP)
 	self.txt_ent = Entry(frame)
 	self.txt_ent.pack()
@@ -48,13 +48,17 @@ class App:
 	self.time_ent = Entry(frame)
 	self.time_ent.pack()
 
+	Label(frame, text="enter the max velocity").pack(side=TOP)
+	self.velocity_ent = Entry(frame)
+	self.velocity_ent.pack()
+
 	self.quit = Button(frame, text="QUIT", fg="red", command=frame.quit)
         self.quit.pack(side=LEFT)
 
 	self.play = Button(frame, text="Play", command=self.moving)
         self.play.pack(side=LEFT)
 
-	self.restart = Button(frame, text="Cars", command=self.adding)
+	self.restart = Button(frame, text="Create Road", command=self.adding)
         self.restart.pack(side=LEFT)
 
 	#self.create_size = Button(frame, text="Length", command=self.lanesize)
@@ -87,10 +91,10 @@ class App:
 	gw = 0 
 	self.canvas = Canvas(root, bg="grey", height=100, width=self.length*10,)
 	self.canvas.place(relx=gw,rely=0)
-	
+
 	for i in range(1,self.length+1):
 		self.canvas.create_line(i*10,0,i*10,100,dash=(3,6))
-	
+
 	frame = Frame(root)
 	frame.pack()
 
@@ -103,6 +107,9 @@ class App:
 		return
 	if not self.time_ent.get():
 		print 'input the duration'
+		return
+	if not self.velocity_ent.get():
+		print 'input a max velocity'
 		return
 	h=int(self.txt_ent.get())
 	gg = int(self.size_ent.get())
@@ -142,7 +149,8 @@ class App:
 	##
 	self.lane.populate(h)
 	duration = kk
-	stca(self.data,self.lane, 4,duration,0, True) ## run code to generate car history
+	max_v = int(self.velocity_ent.get())
+	stca(self.data,self.lane, max_v,duration,0, True) ## run code to generate car history
 	self.pos = self.data.position_history
 	#print self.pos
 	self.pos.sort()
@@ -154,7 +162,7 @@ class App:
 
     def moving(self):
 	if not numcar:
-		print 'no cars added to lane'
+		print 'Create Road First'
 		return
 	#print numcar, 'numcar'
 	#print self.pos
