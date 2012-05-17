@@ -52,6 +52,13 @@ class App:
 	self.velocity_ent = Entry(frame)
 	self.velocity_ent.pack()
 
+	## enter initial values
+	self.txt_ent.insert(0, "5")
+	self.size_ent.insert(0, "20")
+	self.time_ent.insert(0, "11")
+	self.velocity_ent.insert(0, "3")
+	##
+
 	self.quit = Button(frame, text="QUIT", fg="red", command=frame.quit)
         self.quit.pack(side=LEFT)
 
