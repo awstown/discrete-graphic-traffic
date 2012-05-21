@@ -14,8 +14,9 @@ numcar=[]
 cars = []
 size = []
 mode = ['','stca','asep','ca184']
-bool = ['True','False']
+#bool = ['True','False']
 xy = []
+#radio = []
 
 class ToolTip(object):
 
@@ -86,23 +87,24 @@ class App:
 
 	#root.geometry("650x300")
 	self.topframe = Frame(root)
-	self.topframe.pack(side=TOP)
+	self.topframe.pack(side=TOP,expand=YES)
 	otherframe = Frame(root)
-	otherframe.pack(side=LEFT)
+	otherframe.pack(side=LEFT,expand=YES,padx = 5)
 	centerframe = Frame(root)
-	centerframe.pack(side=LEFT)
+	centerframe.pack(side=LEFT,expand=YES)
 	frame = Frame(root)
-	frame.pack(side=LEFT)
+	frame.pack(side=LEFT,expand=YES,padx = 5)
 
 	self.label = Label(otherframe)
 	self.label.pack()
 
 	self.label2 = Label(frame)
-	self.label2.pack()
+	self.label2.pack(side=LEFT)
 
 	self.var = IntVar()
 	self.var3 = IntVar()
-	self.check = Checkbutton(otherframe, text="Cruise Control", variable=self.var3)
+	self.checkvar = StringVar()
+	self.check = Checkbutton(otherframe, text="Cruise Control", variable=self.checkvar, onvalue="True", offvalue="False")
 	self.check.pack(side=RIGHT)
 
 	self.var2 = IntVar()
@@ -121,10 +123,10 @@ class App:
 	self.label.config(text = selection, bg = "grey",bd = 1, relief = SUNKEN)
 
 	#Label(frame, text="probability that drivers will slow down").pack(side=TOP)
-	sim = "probability that drivers will slow down"
+	sim = "probability that drivers will slow down:"
 	self.label2.config(text = sim)
-	self.spin = Spinbox(frame, from_=0, to=1,increment = .1)
-	self.spin.pack(side=RIGHT)
+	self.spin = Spinbox(frame, from_=0, to=1,increment = .1, width = 3)
+	self.spin.pack(side=TOP)
 	
 
 	Label(centerframe, text="enter the number of cars:").pack(side=TOP)
@@ -152,10 +154,10 @@ class App:
 	##
 
 	## create hover text
-	createToolTip(self.check, "leave this checked for now")
+	createToolTip(self.check, "determines if cars stay at max speed")
 	createToolTip(self.R1, "moves all cars at once")
-	createToolTip(self.R2, "not programmed yet")
-	createToolTip(self.R3, "not programmed yet")
+	createToolTip(self.R2, "moves one car at a time")
+	createToolTip(self.R3, "not programmed yet - does stca model")
 	##
 
 	self.quit = Button(centerframe, text="QUIT", fg="red", command=frame.quit)
@@ -235,12 +237,24 @@ class App:
 	max_v = int(self.velocity_ent.get())
 	prob = self.spin.get()
 	prob_int = float(prob)
-	cruise = self.var3.get()
-	if cruise == 1:
-		cruise_bool = bool[0]
+	cruise = self.checkvar.get()
+	#if not radio:
+	#	pass
+	#else:
+	#	radio.pop(0)
+	rad = self.var2.get()
+	print rad
+	#print radio
+	#if cruise == 1:
+	#	cruise_bool = bool[0]
+	#else:
+	#	cruise_bool = bool[1]
+	if rad == 1:
+		stca(self.data,self.lane, max_v,duration,prob_int,cruise) ## run code to generate car history
+	elif rad == 2:
+		asep(self.data,self.lane, max_v,duration,prob_int,cruise)
 	else:
-		cruise_bool = bool[1]
-	stca(self.data,self.lane, max_v,duration,prob_int,cruise_bool) ## run code to generate car history
+		stca(self.data,self.lane, max_v,duration,prob_int,cruise)
 	self.pos = self.data.position_history
 	#print self.pos
 	self.pos.sort()
