@@ -7,10 +7,12 @@ class Car(object):
 reserved to store the number of empty spaces ahead of the car.
     """
     def __init__(self, position=0, speed=0):
+        """Sets the car's position, speed, and g value."""
         self.position = position
         self.speed = speed
         self.g = 0
     def __str__(self):
+        """Prints position, speed, and g value."""
         return 'Position: %d, Speed: %d\nEmpty spaces ahead: %d' % (self.position, self.speed, self.g)
     def reset(self, position, speed):
         """A slightly more convenient way to set the position and speed simultaneously.
@@ -22,12 +24,14 @@ class Lane(object):
     """Defines a Lane object with attributes length, map, and carlist.
     """
     def __init__(self, spaces=1):
+        """Sets the lane's length, builds its 'map' as a list of empty spaces (represented by '_'), and initiates its 'carlist' as an empty list."""
         self.length = spaces
         self.map = []   # uses '_' to represent an empty space, 'n' to represent a space with a car in it.
         self.carlist = []
         for i in range(self.length):
             self.map.append('_')
     def __str__(self):
+        """Prints an visual representation of the lane, with '_' representing an empty space and 'n' representing a space occupied by a car."""
         return ' '.join(self.map)
     def add_car(self, car):
         """Adds the specified instance 'car' to the lane."""
@@ -116,19 +120,25 @@ class Data(object):
         self.lane_length = 0
         self.number_of_cars = 0
     def build_position_history(self, lane):
+        """Creates an empty sublist for each car to store its position data over time."""
         for car in lane.carlist:
             self.position_history.append([])
     def append_position_history(self, lane):
+        """Appends each car's current position to its sublist of position data."""
         for i in range(len(lane.carlist)):
             self.position_history[i].append(lane.carlist[i].position*10)
     def build_speed_history(self, lane):
+        """Creates an empty sublist for each car to store its speed data over time."""
         for car in lane.carlist:
             self.speed_history.append([])
     def append_speed_history(self, lane):
+        """Appends each car's current speed to its sublist of speed data."""
         for i in range(len(lane.carlist)):
             self.speed_history[i].append(lane.carlist[i].speed)
     def update_length(self, lane):
+        """Sets the data object's lane_length attribute to the value of the lane's length attribute."""
         self.lane_length = lane.length
     def update_number(self, lane):
+        """Sets the data object's number_of_cars attribute to reflect the number of cars on the lane."""
         self.number_of_cars = len(lane.carlist)
 
