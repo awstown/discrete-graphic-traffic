@@ -14,9 +14,7 @@ numcar=[]
 cars = []
 size = []
 mode = ['','stca','asep','ca184']
-#bool = ['True','False']
 xy = []
-#radio = []
 
 class ToolTip(object):
 
@@ -243,7 +241,7 @@ class App:
 	#else:
 	#	radio.pop(0)
 	rad = self.var2.get()
-	print rad
+	#print rad
 	#print radio
 	#if cruise == 1:
 	#	cruise_bool = bool[0]
@@ -277,7 +275,7 @@ class App:
 	self.canvas.update() #this line very necessary to update original positions
 	ind = []
 	for i in range(len(self.pos[0])-1):
-		time.sleep(0.2)
+		time.sleep(0.05)
 		xx = 0
 		self.canvas.update()
 		x1=0
@@ -290,34 +288,51 @@ class App:
 					self.canvas.move(cars[j],vel,0)
 					self.canvas.update()
 				elif self.pos[j][i+1] < self.pos[j][i]:
-					vel2 = (self.length*10 - self.pos[j][i])/10
-					self.canvas.move(cars[j],vel2,0)
+					#vel2 = (self.length*10 - self.pos[j][i])/10
+					#self.canvas.move(cars[j],vel2,0)
 					self.canvas.update()
 					if not ind:
 						pass
 					else:
 						ind.pop(0)
 					ind.append(j)
-					x1,y1,x2,y2 = self.canvas.coords(cars[j])
+					if xx ==1:
+						yy = 0
+						while yy < 10:
+							yy = yy + 1
+							time.sleep(0.015)
+							vel3 = (self.length*10 - self.pos[j][i])/10
+							self.canvas.move(cars[j],vel3,0)
+							self.canvas.update()
+						self.canvas.delete(cars[ind[0]])
+						self.canvas.create_rectangle(0,50,10,60, fill=color[col[ind[0]]], tags=cars[ind[0]])
+						self.canvas.update()
+					else:
+						time.sleep(0.01)
+						veloc = (self.pos[ind[0]][i+1])/9.0
+						self.canvas.move(cars[ind[0]],veloc,0)
+						self.canvas.update()
+					#x1,y1,x2,y2 = self.canvas.coords(cars[j])
 		#print x1
 		#print ind[0]	
-		if x1 == self.length*10:
-			#print 'true'
-			self.canvas.delete(cars[ind[0]])
-			self.canvas.create_rectangle(0,50,10,60, fill=color[col[ind[0]]], tags=cars[ind[0]])
-			self.canvas.update()
-			#x1,y1,x2,y2 = self.canvas.coords(cars[j])
-			#print x1, 'yoo', self.pos[ind[0]][i+1]
-			time.sleep(0.05)
-			xy = 0
-			while xy < 10:
-				time.sleep(0.01)
-				xy = xy+1
-				veloc = (self.pos[ind[0]][i+1])/10
-				#print veloc
-				self.canvas.move(cars[ind[0]],veloc,0)
-				self.canvas.update()
+		#if x1 == self.length*10:
+		#	#print 'true'
+		#	self.canvas.delete(cars[ind[0]])
+		#	self.canvas.create_rectangle(0,50,10,60, fill=color[col[ind[0]]], tags=cars[ind[0]])
+		#	self.canvas.update()
+		#	#x1,y1,x2,y2 = self.canvas.coords(cars[j])
+		#	#print x1, 'yoo', self.pos[ind[0]][i+1]
+		#	time.sleep(0.05)
+		#	xy = 0
+		#	while xy < 10:
+		#		time.sleep(0.01)
+		#		xy = xy+1
+		#		veloc = (self.pos[ind[0]][i+1])/10
+		#		#print veloc
+		#		self.canvas.move(cars[ind[0]],veloc,0)
+		#		self.canvas.update()
 		self.canvas.update()
+	print self.pos
 
 
     def reset(self):
