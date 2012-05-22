@@ -1,7 +1,7 @@
 import traffic_objects as to
 
 def update_and_move(car, lane, vmax, p, cc):
-    """To be used only within other rules definitions. Sets the car's speed appropriately, then moves it."""
+    """To be used only within other rules definitions. Sets the car's speed appropriately, then moves it according to that speed."""
     if car.speed > car.g:
         car.speed = car.g
     if car.speed < car.g and car.speed < vmax:
