@@ -32,7 +32,7 @@ def stca(data, lane, vmax, n=10, p=0.50, cc=False):
     
 def ca184(data, lane, vmax, n=10, cc=False):
     """Use the CA184 model to simulate the specified lane for 'n' discrete steps with a speed limit of 'vmax' (measured in discrete steps). Setting argument 'cc' to 'True' activates Cruise Control mode. 'data' refers to the data-holding object that will store the simulation's data."""
-    stca(lane, vmax, n, 0, cc)
+    stca(data,lane, vmax, n, 0, cc)
     
 def asep(data, lane, vmax, n=20, p=0, cc=False):
     """Use the ASEP model to simulate the specified lane for 'n' discrete steps with probability 'p' for a car slowing down and with a speed limit of 'vmax' (measured in discrete steps). Setting argument 'cc' to 'True' activates Cruise Control mode. 'data' refers to the data-holding object that will store the simulation's data."""
