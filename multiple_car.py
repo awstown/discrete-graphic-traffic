@@ -237,6 +237,10 @@ class App:
 		stca(self.data,self.lane, max_v,duration,prob_int,cruise)
 	self.pos = self.data.position_history
 	self.pos.sort()
+	#print self.pos
+	for i in range(len(self.pos)):
+		self.pos[i] = [x * 10 for x in self.pos[i]]
+	#print self.pos
 	for i in range(len(self.pos)):   #need to extract the first value of every list
 		rant = random.randint(0,len(color)-1)
 		col.append(rant)
