@@ -119,7 +119,7 @@ class Data(object):
             self.position_history.append([])
     def append_position_history(self, lane):
         for i in range(len(lane.carlist)):
-            self.position_history[i].append(lane.carlist[i].position*10)
+            self.position_history[i].append(lane.carlist[i].position)
     def build_speed_history(self, lane):
         for car in lane.carlist:
             self.speed_history.append([])
