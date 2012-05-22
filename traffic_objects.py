@@ -126,7 +126,7 @@ class Data(object):
     def append_position_history(self, lane):
         """Appends each car's current position to its sublist of position data."""
         for i in range(len(lane.carlist)):
-            self.position_history[i].append(lane.carlist[i].position*10)
+            self.position_history[i].append(lane.carlist[i].position)
     def build_speed_history(self, lane):
         """Creates an empty sublist for each car to store its speed data over time."""
         for car in lane.carlist:
