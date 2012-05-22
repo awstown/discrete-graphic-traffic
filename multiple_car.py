@@ -152,7 +152,7 @@ class App:
 	createToolTip(self.check, "determines if cars stay at max speed")
 	createToolTip(self.R1, "moves all cars at once")
 	createToolTip(self.R2, "moves one car at a time")
-	createToolTip(self.R3, "not programmed yet - does stca model")
+	createToolTip(self.R3, "stca model with zero percent probability of slowdown")
 	##
 
 	self.quit = Button(centerframe, text="QUIT", fg="red", command=frame.quit)
@@ -234,13 +234,11 @@ class App:
 	elif rad == 2:
 		asep(self.data,self.lane, max_v,duration,prob_int,cruise)
 	else:
-		stca(self.data,self.lane, max_v,duration,prob_int,cruise)
+		ca184(self.data,self.lane, max_v,duration,cruise)
 	self.pos = self.data.position_history
 	self.pos.sort()
-	#print self.pos
 	for i in range(len(self.pos)):
 		self.pos[i] = [x * 10 for x in self.pos[i]]
-	#print self.pos
 	for i in range(len(self.pos)):   #need to extract the first value of every list
 		rant = random.randint(0,len(color)-1)
 		col.append(rant)
