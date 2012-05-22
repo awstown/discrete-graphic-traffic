@@ -39,6 +39,25 @@ def plotHello():
     ax2 = fig2.add_subplot(111, frameon=False)
     ax2.imshow(X)
     show()
+    
+## Generate Data
+lor = 100
+for i in range(100):
+    stca()
+    asep()
+    ca184()
+
+# Outputs: dataSTCA, dataASEP, dataCA184
+
+## Process Data
+
+# get data for 3 graphs one for each model.
+
+## Plot the graphs
+#using matplotlib
+
+    
+
 
 
     
