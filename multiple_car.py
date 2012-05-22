@@ -215,8 +215,8 @@ class App:
 	self.length = gg
 	self.lane= to.Lane(self.length)
 	self.canvas = Canvas(self.topframe,bg="grey", height=100, width=self.length*10)
-	gw = .29 
-	self.canvas.place(relx=gw,rely=0)
+	#gw = .29 
+	#self.canvas.place(relx=gw,rely=0)
 	self.canvas.update()
 	self.canvas.pack()
 	for i in range(1,self.length+1):
@@ -237,6 +237,10 @@ class App:
 		stca(self.data,self.lane, max_v,duration,prob_int,cruise)
 	self.pos = self.data.position_history
 	self.pos.sort()
+	#print self.pos
+	for i in range(len(self.pos)):
+		self.pos[i] = [x * 10 for x in self.pos[i]]
+	#print self.pos
 	for i in range(len(self.pos)):   #need to extract the first value of every list
 		rant = random.randint(0,len(color)-1)
 		col.append(rant)
@@ -252,10 +256,10 @@ class App:
 	self.canvas.update() #this line very necessary to update original positions
 	ind = []
 	for i in range(len(self.pos[0])-1):
-		time.sleep(0.05)
+		time.sleep(0.02)
 		xx = 0
 		self.canvas.update()
-		x1=0
+		#x1=0
 		while xx < 10:
 			xx = xx + 1
 			time.sleep(0.05)
@@ -274,22 +278,23 @@ class App:
 						ind.pop(0)
 					ind.append(j)
 					if xx ==1:
-						yy = 0
-						while yy < 10:
-							yy = yy + 1
-							time.sleep(0.015)
-							vel3 = (self.length*10 - self.pos[j][i])/10
-							self.canvas.move(cars[j],vel3,0)
-							self.canvas.update()
+						#yy = 0
+						#while yy < 10:
+						#	yy = yy + 1
+						#	#time.sleep(0.015)
+						#	vel3 = (self.length*10 - self.pos[j][i])/10
+						#	self.canvas.move(cars[j],vel3,0)
+						#	self.canvas.update()
 						self.canvas.delete(cars[ind[0]])
-						self.canvas.create_rectangle(0,50,10,60, fill=color[col[ind[0]]], tags=cars[ind[0]])
+						self.canvas.create_rectangle(-10,50,0,60, fill=color[col[ind[0]]], tags=cars[ind[0]])
 						self.canvas.update()
 					else:
 						time.sleep(0.01)
-						veloc = (self.pos[ind[0]][i+1])/9.0
+						veloc = (self.pos[ind[0]][i+1]+10)/9.0
 						self.canvas.move(cars[ind[0]],veloc,0)
 						self.canvas.update()
 		self.canvas.update()
+	#print self.pos
 
 
     def reset(self):
