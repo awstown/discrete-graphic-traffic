@@ -1,0 +1,138 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module traffic_objects</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>traffic_objects</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/RayRay/Documents/CalPoly/PHYS200/discrete-graphic-traffic/traffic_objects.py">/Users/RayRay/Documents/CalPoly/PHYS200/discrete-graphic-traffic/traffic_objects.py</a></font></td></tr></table>
+    <p><tt>#&nbsp;Defines&nbsp;the&nbsp;<a href="#Car">Car</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;and&nbsp;the&nbsp;<a href="#Lane">Lane</a>&nbsp;<a href="__builtin__.html#object">object</a>.&nbsp;This&nbsp;was&nbsp;built&nbsp;assuming&nbsp;the&nbsp;movement&nbsp;of&nbsp;the&nbsp;cars&nbsp;would&nbsp;be&nbsp;handled&nbsp;by&nbsp;a&nbsp;'rules'&nbsp;script.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="random.html">random</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="traffic_objects.html#Car">Car</a>
+</font></dt><dt><font face="helvetica, arial"><a href="traffic_objects.html#Data">Data</a>
+</font></dt><dt><font face="helvetica, arial"><a href="traffic_objects.html#Lane">Lane</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Car">class <strong>Car</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Defines&nbsp;a&nbsp;<a href="#Car">Car</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;attributes&nbsp;position,&nbsp;speed,&nbsp;and&nbsp;g,&nbsp;where&nbsp;g&nbsp;is<br>
+reserved&nbsp;to&nbsp;store&nbsp;the&nbsp;number&nbsp;of&nbsp;empty&nbsp;spaces&nbsp;ahead&nbsp;of&nbsp;the&nbsp;car.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Car-__init__"><strong>__init__</strong></a>(self, position<font color="#909090">=0</font>, speed<font color="#909090">=0</font>)</dt><dd><tt>Sets&nbsp;the&nbsp;car's&nbsp;position,&nbsp;speed,&nbsp;and&nbsp;g&nbsp;value.</tt></dd></dl>
+
+<dl><dt><a name="Car-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>Prints&nbsp;position,&nbsp;speed,&nbsp;and&nbsp;g&nbsp;value.</tt></dd></dl>
+
+<dl><dt><a name="Car-reset"><strong>reset</strong></a>(self, position, speed)</dt><dd><tt>A&nbsp;slightly&nbsp;more&nbsp;convenient&nbsp;way&nbsp;to&nbsp;set&nbsp;the&nbsp;position&nbsp;and&nbsp;speed&nbsp;simultaneously.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Data">class <strong>Data</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>A&nbsp;data-holding&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;which&nbsp;contains&nbsp;histories&nbsp;of&nbsp;each&nbsp;car's&nbsp;position&nbsp;and&nbsp;speed&nbsp;as&nbsp;well&nbsp;as&nbsp;the&nbsp;length&nbsp;of&nbsp;the&nbsp;lane&nbsp;and&nbsp;the&nbsp;number&nbsp;of&nbsp;cars&nbsp;on&nbsp;the&nbsp;lane.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Data-__init__"><strong>__init__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Data-append_position_history"><strong>append_position_history</strong></a>(self, lane)</dt><dd><tt>Appends&nbsp;each&nbsp;car's&nbsp;current&nbsp;position&nbsp;to&nbsp;its&nbsp;sublist&nbsp;of&nbsp;position&nbsp;data.</tt></dd></dl>
+
+<dl><dt><a name="Data-append_speed_history"><strong>append_speed_history</strong></a>(self, lane)</dt><dd><tt>Appends&nbsp;each&nbsp;car's&nbsp;current&nbsp;speed&nbsp;to&nbsp;its&nbsp;sublist&nbsp;of&nbsp;speed&nbsp;data.</tt></dd></dl>
+
+<dl><dt><a name="Data-build_position_history"><strong>build_position_history</strong></a>(self, lane)</dt><dd><tt>Creates&nbsp;an&nbsp;empty&nbsp;sublist&nbsp;for&nbsp;each&nbsp;car&nbsp;to&nbsp;store&nbsp;its&nbsp;position&nbsp;data&nbsp;over&nbsp;time.</tt></dd></dl>
+
+<dl><dt><a name="Data-build_speed_history"><strong>build_speed_history</strong></a>(self, lane)</dt><dd><tt>Creates&nbsp;an&nbsp;empty&nbsp;sublist&nbsp;for&nbsp;each&nbsp;car&nbsp;to&nbsp;store&nbsp;its&nbsp;speed&nbsp;data&nbsp;over&nbsp;time.</tt></dd></dl>
+
+<dl><dt><a name="Data-update_length"><strong>update_length</strong></a>(self, lane)</dt><dd><tt>Sets&nbsp;the&nbsp;data&nbsp;<a href="__builtin__.html#object">object</a>'s&nbsp;lane_length&nbsp;attribute&nbsp;to&nbsp;the&nbsp;value&nbsp;of&nbsp;the&nbsp;lane's&nbsp;length&nbsp;attribute.</tt></dd></dl>
+
+<dl><dt><a name="Data-update_number"><strong>update_number</strong></a>(self, lane)</dt><dd><tt>Sets&nbsp;the&nbsp;data&nbsp;<a href="__builtin__.html#object">object</a>'s&nbsp;number_of_cars&nbsp;attribute&nbsp;to&nbsp;reflect&nbsp;the&nbsp;number&nbsp;of&nbsp;cars&nbsp;on&nbsp;the&nbsp;lane.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Lane">class <strong>Lane</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Defines&nbsp;a&nbsp;<a href="#Lane">Lane</a>&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;attributes&nbsp;length,&nbsp;map,&nbsp;and&nbsp;carlist.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Lane-__init__"><strong>__init__</strong></a>(self, spaces<font color="#909090">=1</font>)</dt><dd><tt>Sets&nbsp;the&nbsp;lane's&nbsp;length,&nbsp;builds&nbsp;its&nbsp;'map'&nbsp;as&nbsp;a&nbsp;list&nbsp;of&nbsp;empty&nbsp;spaces&nbsp;(represented&nbsp;by&nbsp;'_'),&nbsp;and&nbsp;initiates&nbsp;its&nbsp;'carlist'&nbsp;as&nbsp;an&nbsp;empty&nbsp;list.</tt></dd></dl>
+
+<dl><dt><a name="Lane-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>Prints&nbsp;an&nbsp;visual&nbsp;representation&nbsp;of&nbsp;the&nbsp;lane,&nbsp;with&nbsp;'_'&nbsp;representing&nbsp;an&nbsp;empty&nbsp;space&nbsp;and&nbsp;'n'&nbsp;representing&nbsp;a&nbsp;space&nbsp;occupied&nbsp;by&nbsp;a&nbsp;car.</tt></dd></dl>
+
+<dl><dt><a name="Lane-add_car"><strong>add_car</strong></a>(self, car)</dt><dd><tt>Adds&nbsp;the&nbsp;specified&nbsp;instance&nbsp;'car'&nbsp;to&nbsp;the&nbsp;lane.</tt></dd></dl>
+
+<dl><dt><a name="Lane-car_positions"><strong>car_positions</strong></a>(self)</dt><dd><tt>Returns&nbsp;a&nbsp;list&nbsp;containing&nbsp;the&nbsp;position&nbsp;of&nbsp;each&nbsp;car&nbsp;in&nbsp;carlist.</tt></dd></dl>
+
+<dl><dt><a name="Lane-car_speeds"><strong>car_speeds</strong></a>(self)</dt><dd><tt>Returns&nbsp;a&nbsp;list&nbsp;containing&nbsp;the&nbsp;speed&nbsp;of&nbsp;each&nbsp;car&nbsp;in&nbsp;carlist.</tt></dd></dl>
+
+<dl><dt><a name="Lane-g_update_all"><strong>g_update_all</strong></a>(self)</dt><dd><tt>Finds&nbsp;and&nbsp;sets&nbsp;the&nbsp;appropriate&nbsp;g&nbsp;value&nbsp;for&nbsp;each&nbsp;car&nbsp;instance&nbsp;in&nbsp;the&nbsp;lane.</tt></dd></dl>
+
+<dl><dt><a name="Lane-g_update_car"><strong>g_update_car</strong></a>(self, car)</dt><dd><tt>Finds&nbsp;and&nbsp;sets&nbsp;the&nbsp;appropriate&nbsp;g&nbsp;value&nbsp;for&nbsp;a&nbsp;specific&nbsp;car&nbsp;instance.</tt></dd></dl>
+
+<dl><dt><a name="Lane-map_update"><strong>map_update</strong></a>(self)</dt><dd><tt>Updates&nbsp;the&nbsp;map&nbsp;list&nbsp;to&nbsp;reflect&nbsp;changes&nbsp;in&nbsp;car&nbsp;positions.</tt></dd></dl>
+
+<dl><dt><a name="Lane-move_car"><strong>move_car</strong></a>(self, car)</dt><dd><tt>Changes&nbsp;the&nbsp;position&nbsp;of&nbsp;a&nbsp;given&nbsp;car&nbsp;based&nbsp;on&nbsp;its&nbsp;speed&nbsp;attribute,&nbsp;making&nbsp;sure&nbsp;to&nbsp;loop&nbsp;to&nbsp;the&nbsp;beginning&nbsp;of&nbsp;the&nbsp;lane&nbsp;appropriately.</tt></dd></dl>
+
+<dl><dt><a name="Lane-populate"><strong>populate</strong></a>(self, n)</dt><dd><tt>Adds&nbsp;n&nbsp;cars&nbsp;to&nbsp;the&nbsp;lane&nbsp;in&nbsp;random&nbsp;positions.</tt></dd></dl>
+
+<dl><dt><a name="Lane-print_cars"><strong>print_cars</strong></a>(self)</dt><dd><tt>Displays&nbsp;information&nbsp;about&nbsp;each&nbsp;car&nbsp;in&nbsp;'carlist'.&nbsp;May&nbsp;be&nbsp;useful&nbsp;for&nbsp;debugging,&nbsp;etc.</tt></dd></dl>
+
+<dl><dt><a name="Lane-remove_car"><strong>remove_car</strong></a>(self, car)</dt><dd><tt>Removes&nbsp;the&nbsp;specified&nbsp;instance&nbsp;'car'&nbsp;from&nbsp;the&nbsp;lane.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>
